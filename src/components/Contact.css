@@ -1,0 +1,85 @@
+section{
+    font-family: 'Times New Roman', Times, serif;
+}
+.contact-icons {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    
+    
+}
+
+.icon-item a {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    background-color: inherit;
+    border-radius: 50%;
+    font-size: 22px;
+    color: gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 10px 25px var(--shadow-color);
+    overflow: hidden;
+    
+}
+
+/* Hide label by default */
+.icon-item .label {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+    color: inherit;
+    transform: scale(0);
+    font-size: 14px;
+    
+}
+
+.icon-item a:hover {
+    border-radius: 11ric ;
+    /* from 50% (circle) to rounded rectangle */
+    width: 90px;
+    /* optional: expand width to make room for text */
+    transition: all 0.4s ease-in-out;
+}
+
+/* Icon styling */
+.icon-item .icon {
+    transition: all 0.3s ease-in-out;
+}
+
+/* On hover: hide icon, show label */
+.icon-item a:hover .icon {
+    opacity: 0;
+    transform: scale(0.6);
+}
+
+.icon-item a:hover .label {
+    opacity: 1;
+    transform: scale(1);
+    
+}
+
+/* Optional: different glow colors per icon type */
+.icon-item a.email:hover {
+    box-shadow: 0 0 15px #d44638;
+    color: #d44638;
+}
+
+.icon-item a.github:hover {
+    box-shadow: 0 0 15px #6e5496;
+    color: #6e5496;
+}
+
+.icon-item a.linkedin:hover {
+    box-shadow: 0 0 15px #0077b5;
+    color: #0077b5;
+}
+
+.location{
+    margin-top: 2%;
+    font-size: 16px;
+}
