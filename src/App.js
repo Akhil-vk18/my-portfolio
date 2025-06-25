@@ -2,7 +2,11 @@ import React ,{useState} from 'react';
 import Header from './components/Header';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
+import Profile from './components/Profile';
 import './App.css';
+import Skills from './components/Skills';
+import Footer from './components/Footer';
+
 
 
 
@@ -12,15 +16,18 @@ function App(){
     setDarkMode(!darkmode);
   };
   return (
-    <div className={darkmode?'app dark':'app'}>
+    <div className={darkmode?'dark':'light'}>
       <div className='toggle-Wrapper' onClick={changeTheme}>
-        <div className={'toggle-circle ${darkmode?"Dark":""}'}>
+        <div className={`toggle-circle ${darkmode?"Dark":""}`}>
         {darkmode?"☀️":"🌙"}
         </div>
       </div>
       <Header />
-      <Projects />
+      <Profile  />
+      <Skills  />
+      <Projects  />
       <Contact />
+      <Footer />
     </div>
   );
 }

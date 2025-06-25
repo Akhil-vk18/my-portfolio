@@ -2,7 +2,7 @@ import React from "react";
 
 function Projects(){
     return(
-    <section style={{padding:'2rem'}}>
+    <section id="projects" style={{padding:'2rem'}}>
         <h2>Projects</h2>
 
         <div>

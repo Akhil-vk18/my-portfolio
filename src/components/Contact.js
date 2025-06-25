@@ -9,7 +9,7 @@ import "./Contact.css";
 
 function Contact() {
   return (
-    <section style={{ padding: "2rem", textAlign: "center" }}>
+    <section id="contact" style={{ padding: "2rem", textAlign: "center" }}>
       <h2>Contact Me</h2>
       <div className="contact-icons">
         <div className="icon-item">
