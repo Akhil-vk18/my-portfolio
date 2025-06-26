@@ -1,0 +1,21 @@
+.projects-section{
+    padding: 2rem;
+    text-align: center;
+}
+.projects-grid{
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(3,1fr);
+    margin-top: 50px;
+
+
+}
+p{
+    text-align: justify;
+}
+.project-card{
+    background-color: rebeccapurple;
+    font-size: large;
+    padding: 30px;
+    
+}

@@ -1,4 +1,8 @@
 
+.contact-section{
+    padding: 2rem;
+    text-align: center;
+}
 .contact-icons {
     display: flex;
     justify-content: center;
@@ -80,4 +84,5 @@
 .location{
     margin-top: 2%;
     font-size: 16px;
+    text-align: center;
 }
