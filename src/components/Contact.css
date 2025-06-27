@@ -1,12 +1,15 @@
 
 .contact-section{
+    
     padding: 2rem;
     text-align: center;
 }
 .contact-icons {
+    padding: 1.4rem;
+   
     display: flex;
     justify-content: center;
-    gap: 2rem;
+    gap: 3rem;
     
     
 }
@@ -82,7 +85,7 @@
 }
 
 .location{
-    margin-top: 2%;
+    margin-top: .5%;
     font-size: 16px;
     text-align: center;
 }

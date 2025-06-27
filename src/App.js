@@ -11,17 +11,19 @@ import Footer from './components/Footer';
 
 
 function App(){
-  const [darkmode,setDarkMode]=useState(false);
-  const changeTheme =()=>{
-    setDarkMode(!darkmode);
-  };
-  return (
-    <div className={darkmode?'dark':'light'}>
-      <div className='toggle-Wrapper' onClick={changeTheme}>
-        <div className={`toggle-circle ${darkmode?"Dark":""}`}>
-        {darkmode?"☀️":"🌙"}
-        </div>
-      </div>
+  // const [darkmode,setDarkMode]=useState(false);
+  // const changeTheme =()=>{
+  //   setDarkMode(!darkmode);
+  // };
+  // return (
+  //   <div className={darkmode?'dark':'light'}>
+  //     <div className='toggle-Wrapper' onClick={changeTheme}>
+  //       <div className={`toggle-circle ${darkmode?"Dark":""}`}>
+  //       {darkmode?"☀️":"🌙"}
+  //       </div>
+  //     </div>
+  return(
+    <div className='main'>
       <Header />
       <Profile  />
       <Skills  />

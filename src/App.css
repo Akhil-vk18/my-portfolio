@@ -1,50 +1,33 @@
-*{
-  font-family: 'Times New Roman', Times, serif;
-}
-html{
-  scroll-behavior: smooth;
-}
-.light {
-  background-color: #ffffff;
-  --card-bg: #f0f0f0;
-  color: #111;
-  transition: all 0.6s ease-in-out;
-  min-height: 100vh;
-  /* padding-top: 3rem; */
-  --shadow-color: rgb(112, 110, 110);
-  /* light mode shadow */
+/* Root Theme Variables (Minimal Colors by Dumma Branding) */
+:root {
+    --primary-bg: #E5EAF5;
+    --secondary-bg: #D0BDF4;
+    --accent-color: #8458B3;
+    --highlight: #A0D2EB;
+    /* --text-color: #494D5F; */
+    --card-bg: #ffffff;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --hover-glow: #8458B3;
 }
 
-.dark {
-  background-color: #100f0f;
-  --card-bg: #1e1e2f;
-  color: #f0f0f0;
-  transition: all 0.6s ease-in-out;
-  min-height: 100vh;
-  --shadow-color: rgba(131, 131, 131, 0.386);
-  /* dark mode shadow */
-}
-.toggle-Wrapper {
-  position: fixed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  top: 1rem;
-  right: 1rem;
-  z-index: 1000;
-  padding: 0.6%;
-  border-radius: 25px;
-  /* height: 60px; */
-  width: 60px;
-  background-color: inherit;
-  /* border: 1px solid currentColor; */
-  cursor: pointer;
-  /* color: inherit; */
-  font-size: 1.2rem;
-  transition: background 0.6s ease-in-out;
-  box-shadow: 0 10px 25px var(--shadow-color);
+/* Global Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-color);
 }
 
-.toggle-Wrapper:hover{
-  color: rgb(172, 121, 54);
+html,
+body {
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e, #ffee32);
+
+    scroll-behavior: smooth;
+    transition: all 0.4s ease-in-out;
+}
+
+h2,
+h4 {
+    color: var(--accent-color);
 }

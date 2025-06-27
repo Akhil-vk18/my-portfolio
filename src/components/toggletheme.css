@@ -1,0 +1,50 @@
+
+html{
+  scroll-behavior: smooth;
+}
+
+
+.light {
+  background-color: #ffffff;
+  --card-bg: #f0f0f0;
+  color: #111;
+  transition: all 0.6s ease-in-out;
+  min-height: 100vh;
+  /* padding-top: 3rem; */
+  --shadow-color: rgb(112, 110, 110);
+  /* light mode shadow */
+}
+
+.dark {
+  background-color: #100f0f;
+  --card-bg: #1e1e2f;
+  color: #f0f0f0;
+  transition: all 0.6s ease-in-out;
+  min-height: 100vh;
+  --shadow-color: rgba(131, 131, 131, 0.386);
+  /* dark mode shadow */
+}
+.toggle-Wrapper {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  padding: 0.6%;
+  border-radius: 25px;
+  /* height: 60px; */
+  width: 60px;
+  background-color: inherit;
+  /* border: 1px solid currentColor; */
+  cursor: pointer;
+  /* color: inherit; */
+  font-size: 1.2rem;
+  transition: background 0.6s ease-in-out;
+  box-shadow: 0 10px 25px var(--shadow-color);
+}
+
+.toggle-Wrapper:hover{
+  color: rgb(172, 121, 54);
+}
