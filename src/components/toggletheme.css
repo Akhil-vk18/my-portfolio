@@ -45,6 +45,12 @@ html{
   box-shadow: 0 10px 25px var(--shadow-color);
 }
 
+.toggle-circle {
+  color: #dbe20c;
+  /* moon default */
+}
+
 .toggle-Wrapper:hover{
   color: rgb(172, 121, 54);
 }
+
