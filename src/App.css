@@ -2,12 +2,13 @@
 :root {
     /* --primary-bg: #E5EAF5;
     --secondary-bg: #D0BDF4;
-    --accent-color: #8458B3;
+    
     --highlight: #A0D2EB; */
     /* --text-color: #494D5F; */
+    --accent-color: #2ecc71;
     --card-bg: #ffffff;
     --shadow-color: rgba(0, 0, 0, 0.1);
-    --hover-glow: #8458B3;
+    --hover-glow: #a8e6cf;
 }
 
 /* Global Reset & Base Styles */

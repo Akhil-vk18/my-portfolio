@@ -1,0 +1,141 @@
+.cover-section {
+    position: relative;
+    width: 100vw;
+    min-height: 100vh;
+    height: 100vh;
+    display: block; /* Use block, not inline */
+    overflow: hidden;
+}
+
+.cover-root {
+    position: absolute;
+    z-index: 1;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    overflow: hidden;
+}
+
+.cover-corner {
+  position: absolute;
+  z-index: 2;
+  font-size: 1.1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--accent-color, #8458B3);
+  background: rgba(255,255,255,0.05);
+  padding: 0.5rem 1rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.cover-top-left {
+  top: 1.5rem;
+  left: 1.5rem;
+}
+
+.cover-top-right {
+  top: 1.5rem;
+  right: 6.5rem; /* Increased from 1.5rem to 4.5rem to make space for the toggle */
+  text-align: right;
+}
+
+.cover-eye {
+  font-size: 1.3em;
+}
+
+.cover-visitors {
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+.cover-center {
+  text-align: center;
+  margin: 0 auto;
+  z-index: 1;
+}
+
+.cover-title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+  color: var(--accent-color, #8458B3);
+  animation: fadeInUp 1s cubic-bezier(.39,.575,.565,1) both;
+}
+
+.cover-subtitle {
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--text-color, #494D5F);
+  animation: fadeInUp 1.2s cubic-bezier(.39,.575,.565,1) both;
+}
+.wrapper{
+    display: flex;
+   gap: 4px;
+margin-top: 2rem;
+align-items: center;
+}
+.rotating-text {
+    font-size: 20px;
+display: flex;
+background-color: aqua;
+width:fit-content;
+padding: 1px;
+border-radius: 15%;
+    overflow: hidden;
+    color: black;
+   
+}
+.plain-code {
+    /* font-weight: 600; */
+    font-size: 20px;
+     }
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1.2s forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 700px) {
+  .cover-title {
+    font-size: 2rem;
+  }
+  .cover-subtitle {
+    font-size: 1rem;
+  }
+  .cover-corner {
+    font-size: 0.95rem;
+    padding: 0.4rem 0.7rem;
+  }
+  .cover-root {
+    min-height: 40vh;
+  }
+}
+
+.aurora-bg {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 0;
+}

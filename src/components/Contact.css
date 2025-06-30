@@ -1,6 +1,6 @@
 
 .contact-section{
-    
+    /* color: inherit; */
     padding: 2rem;
     text-align: center;
 }
@@ -18,16 +18,16 @@
     position: relative;
     width: 60px;
     height: 60px;
-    background-color: inherit;
+    /* background-color: inherit; */
     border-radius: 50%;
     font-size: 22px;
-    color: gray;
+    color: inherit;
     display: flex;
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0 10px 25px var(--shadow-color);
+    transition: all  0.3s ease-in-out;
+    box-shadow: 0 10px 25px var(--shadow-color) ;
     overflow: hidden;
     
 }
@@ -37,7 +37,7 @@
     position: absolute;
     opacity: 0;
     transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
-    color: inherit;
+    /* color: inherit; */
     transform: scale(0);
     font-size: 14px;
     
@@ -53,7 +53,8 @@
 
 /* Icon styling */
 .icon-item .icon {
-    transition: all 0.3s ease-in-out;
+    transition: all 0.8s ease-in-out;
+    
 }
 
 /* On hover: hide icon, show label */
