@@ -18,26 +18,29 @@ function App(){
       <div className={darkmode?'dark':'light'}>
       <ToggleTheme darkmode={darkmode} setDarkMode={setDarkMode} />
 
-      <Cover />
-      <AnimatedContent  distance={150}
-    direction="horizontal"
+      <Cover /><hr />
+      
+    
+      {/* <Header /> */}
+ 
+      <Profile  /><hr />
+           <AnimatedContent  distance={150}
+    direction="vertical"
     reverse={false}
-    duration={1.2}
-    ease="bounce.out"
+    duration={1.5}
+    ease="power3.out"
     initialOpacity={0.2}
     animateOpacity
-    scale={1.1}
-    threshold={0.2}
-    delay={0.3}
+    scale={0.8}
+    threshold={0.1}
+    delay={0.1}
   >
-      {/* <Header /> */}
-      <Profile  />
-      <AnimatedContent><Skills  /></AnimatedContent>
-      
-      <Projects  />
+    <Skills  />
+    </AnimatedContent><hr />
+      <Projects  /><hr />
       <Contact />
       <Footer />
-      </AnimatedContent>
+    
       </div>
       </div>
    

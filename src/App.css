@@ -10,7 +10,33 @@
     --shadow-color: rgba(0, 0, 0, 0.1);
     --hover-glow: #a8e6cf;
 }
+hr {
+    border: none;
+    height: 3px;
+    width: 60%;
+    margin: 3rem auto;
+    opacity: 0.85;
+    background: linear-gradient(
+        90deg,
+        var(--accent-color, #2ecc71) 0%,
+        #8458B3 40%,
+        #fff 50%,
+        #8458B3 60%,
+        var(--accent-color, #2ecc71) 100%
+    );
+    background-size: 200% 100%;
+    background-position: 0% 0%;
+    animation: glaze-move 2.5s linear infinite;
+}
 
+@keyframes glaze-move {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 100% 0%;
+    }
+}
 /* Global Reset & Base Styles */
 * {
     margin: 0;
