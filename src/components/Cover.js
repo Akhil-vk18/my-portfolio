@@ -3,6 +3,7 @@ import { FaEye } from "react-icons/fa";
 import "./Cover.css";
 import RotatingText from "../reactbits/RotatingText/RotatingText";
 import Aurora from "../reactbits/Aurora/Aurora";
+import Quote from "./Quote";
 const VISITOR_COUNT = 1234; // Placeholder, replace with real data if needed
 
 function Cover() {
@@ -52,7 +53,10 @@ function Cover() {
             <span className="plain-code">Code</span>
           </div>
         </div>
-      </div>
+        <div className="quotes">
+          <Quote />
+        </div>
+      </div> 
     </section>
   );
 }

@@ -6,7 +6,13 @@
     display: block; /* Use block, not inline */
     overflow: hidden;
 }
-
+.quotes{
+  position: absolute;
+bottom: 5rem;
+  margin-top: 50rem;
+  max-height: 15rem;
+  height: 10rem;
+}
 .cover-root {
     position: absolute;
     z-index: 1;

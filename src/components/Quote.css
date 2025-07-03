@@ -1,0 +1,21 @@
+.quotes{
+padding: 4rem;
+max-width: fit-content;
+bottom: 5rem;
+    margin-top: 50rem;
+    max-height: 15rem;
+    height: 10rem;
+background-color: beige;
+
+align-content: center;
+
+/* font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
+}
+
+.quote-text{
+    font-size: 16px;
+}
+
+.author{
+    text-align: end;
+}
