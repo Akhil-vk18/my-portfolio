@@ -12,16 +12,18 @@ function Quote(){
         .then((response)=>response.json())
         .then((quotes)=>{
             const random = quotes.quotes[Math.floor(Math.random()*quotes.quotes.length)];
-            setQuote(random);setLoading(false);
+            setQuote(random);
+            
+            setLoading(false);
         })
     },[]);
-    if (loading) return <p className='loading'><CircularText
+    if (loading) return <div className='loading'><CircularText
     text="Quotes*Loading*"
     onHover="speedUp"
     spinDuration={20}
     className="custom-class"
     
-  /></p>;
+  /></div>;
     return(
         <div className="Quotes">
             <p className="quote-text">"{quote.text}"</p>

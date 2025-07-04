@@ -1,5 +1,4 @@
-
-import Header from './components/Header';
+import Navigation from './components/Navigation';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Profile from './components/Profile';
@@ -16,12 +15,12 @@ function App(){
 
     <div className='main'>
       <div className={darkmode?'dark':'light'}>
-      <ToggleTheme darkmode={darkmode} setDarkMode={setDarkMode} />
+      <Navigation  darkmode={darkmode} setDarkMode={setDarkMode} />
 
       <Cover /><hr />
       
     
-      {/* <Header /> */}
+     
  
       <Profile  /><hr />
            <AnimatedContent  distance={150}

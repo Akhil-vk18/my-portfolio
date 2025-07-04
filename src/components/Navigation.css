@@ -1,0 +1,62 @@
+.nav-bar{
+    position: fixed;
+    background-color: color-mix(in srgb, var(--bg) 80%, transparent);
+    /* opacity: 100%; */
+    width: 60%;
+    height: 3rem;
+    display: flex;
+    top: 2rem;
+  margin-left: 18rem;
+  align-items: center;
+  /* justify-content: center; */
+  border-radius: 2rem;
+  z-index: 1000;
+
+}
+.nav-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 2rem;
+}
+
+.nav-bar a{
+    text-decoration: none;
+    font-weight: 600;
+    position: relative;
+    font-size: 18px;
+    color: inherit;
+    
+}
+
+.nav-bar a::after{
+    position: absolute;
+    
+    width:0;
+    content: '';
+    background: linear-gradient(270deg,
+                #a0d2eb, #d0bdf4, #8458b3, #a0d2eb);
+                height: 3px;
+    bottom: 0;
+    left: 0;
+    transition: width 0.6s;
+}
+
+.nav-bar a:hover::after{
+    width: 100%;
+
+}
+
+.nav-bar a.active {
+    /* color: greenyellow; */
+    /* active link text color */
+    font-weight: bold;
+}
+
+.nav-bar a.active::after {
+    width: 100%;
+ 
+
+}
+

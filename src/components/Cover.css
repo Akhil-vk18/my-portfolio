@@ -48,7 +48,7 @@ bottom: 5rem;
 
 .cover-top-right {
   top: 1.5rem;
-  right: 6.5rem; /* Increased from 1.5rem to 4.5rem to make space for the toggle */
+  right: 1.5rem; /* Increased from 1.5rem to 4.5rem to make space for the toggle */
   text-align: right;
 }
 

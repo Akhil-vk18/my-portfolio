@@ -10,6 +10,9 @@
     --shadow-color: rgba(0, 0, 0, 0.1);
     --hover-glow: #a8e6cf;
 }
+section {
+    scroll-margin-top: 80px;
+}
 hr {
     border: none;
     height: 3px;
