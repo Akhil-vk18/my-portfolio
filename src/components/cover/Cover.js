@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { FaEye } from "react-icons/fa";
+// import { FaEye } from "react-icons/fa";
 import "./Cover.css";
-import RotatingText from "../reactbits/RotatingText/RotatingText";
-import Aurora from "../reactbits/Aurora/Aurora";
-import Quote from "./Quote";
-const VISITOR_COUNT = 1234; // Placeholder, replace with real data if needed
+import RotatingText from "../../reactbits/RotatingText/RotatingText";
+import Aurora from "../../reactbits/Aurora/Aurora";
+import Quote from "../quotes/Quote";
+// const VISITOR_COUNT = 1234; // Placeholder, replace with real data if needed
 
 function Cover() {
   const [dateTime, setDateTime] = useState(new Date());
@@ -21,10 +21,10 @@ function Cover() {
   amplitude={1.0}
   speed={0.5} />
       <div className="cover-root">
-        <div className="cover-corner cover-top-left fade-in">
+        {/* <div className="cover-corner cover-top-left fade-in">
           <FaEye className="cover-eye" />
           <span className="cover-visitors">{VISITOR_COUNT}</span>
-        </div>
+        </div> */}
         <div className="cover-corner cover-top-right fade-in">
           {dateTime.toLocaleDateString()}
           <br />

@@ -1,7 +1,7 @@
 import './Quote.css';
 import { random } from "gsap";
-import React ,{useEffect,useState} from "react";
-import CircularText from "../reactbits/TextAnimations/CircularText/CircularText";
+import {useEffect,useState} from "react";
+import CircularText from "../../reactbits/TextAnimations/CircularText/CircularText";
 const url ="https://thequoteshub.com/api/tags/computers";
 
 function Quote(){

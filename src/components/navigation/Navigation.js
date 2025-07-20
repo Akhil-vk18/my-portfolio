@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Navigation.css";
-import ToggleTheme from "./ToggleTheme";
+import ToggleTheme from "../toogleTheme/ToggleTheme";
 function Navigation({ darkmode, setDarkMode }) {
   const [activeLink, setActiveLink] = useState("");
   const handleLinkClick = (href) => {

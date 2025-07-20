@@ -18,11 +18,11 @@ html{
 }
 
 .dark {
-  background-color: #1e1e1e;
+  background-color: #000000;
   --bg: #252525;
   --card-bg: #393e46;
-  color: #ecf0f1;
-  --text-color: #ecf0f1;
+  color: #ffffff;
+  --text-color: #ffffff;
   transition: all 0.6s ease-in-out;
   min-height: 100vh;
   --shadow-color: rgba(131, 131, 131, 0.386);

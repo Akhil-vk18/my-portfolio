@@ -1,16 +1,16 @@
-import Navigation from './components/Navigation';
-import Projects from './components/Projects';
-import Contact from './components/Contact';
-import Profile from './components/Profile';
+import Navigation from './components/navigation/Navigation';
+import Projects from './components/projects/Projects';
+import Contact from './components/contact/Contact';
+import Profile from './components/profile/Profile';
 import './App.css';
-import Skills from './components/Skills';
-import Footer from './components/Footer';
-import ToggleTheme from './components/ToggleTheme';
+import Skills from './components/skills/Skills';
+import Footer from './components/footer/Footer';
+// import ToggleTheme from './components/ToggleTheme';
 import React ,{useState} from 'react';
-import Cover from './components/Cover';
+import Cover from './components/cover/Cover';
 import AnimatedContent from "./reactbits/AnimatedContent/AnimatedContent"
 function App(){
-  const [darkmode,setDarkMode]=useState(false);
+  const [darkmode,setDarkMode]=useState(true);
   return(  
 
     <div className='main'>
