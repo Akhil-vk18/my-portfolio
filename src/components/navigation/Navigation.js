@@ -1,14 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Navigation.css";
 import ToggleTheme from "../toogleTheme/ToggleTheme";
+
 function Navigation({ darkmode, setDarkMode }) {
   const [activeLink, setActiveLink] = useState("");
+  const [navWidth, setNavWidth] = useState(60); // Start at 60%
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // You can adjust these values for min/max width and scroll sensitivity
+      const minWidth = 35; // percent
+      const maxWidth = 60; // percent
+      const scrollY = window.scrollY;
+      const maxScroll = 300; // px after which nav is at min width
+
+      // Calculate new width
+      let newWidth =
+        maxWidth -
+        ((maxWidth - minWidth) * Math.min(scrollY, maxScroll)) / maxScroll;
+      setNavWidth(newWidth);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const handleLinkClick = (href) => {
-    setActiveLink(href); // Set active link when clicked
+    setActiveLink(href);
   };
+
   return (
     <header>
-      <nav className="nav-bar">
+      <nav
+        className="nav-bar"
+        style={{
+          width: `${navWidth}%`,
+          marginLeft: `${(100 - navWidth) / 2}%`,
+        }}
+      >
+        <a
+          href="https://github.com/Akhil-vk18"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="nav-github-logo"
+          aria-label="GitHub"
+        >
+          <img src="https://github.com/Akhil-vk18.png" alt="GitHub" />
+        </a>
         <div className="nav-content">
           <a
             href="#profile"
@@ -38,10 +75,7 @@ function Navigation({ darkmode, setDarkMode }) {
           >
             Contact
           </a>
-
-          {/* <div className={darkmode ? "dark" : "light"}> */}
           <ToggleTheme darkmode={darkmode} setDarkMode={setDarkMode} />
-          {/* </div> */}
         </div>
       </nav>
     </header>
