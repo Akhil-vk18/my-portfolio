@@ -5,11 +5,11 @@ html{
 
 
 .light {
-  background-color:#f8f9fa;
+  background-color:rgb(209, 224, 239);
   --bg:#e9f0f6;
   --card-bg: #b9bec116;
   color: #3d365c;
-  --text-color:#3d365c;
+  --text-color:#000000;
   transition: all 0.6s ease-in-out;
   min-height: 100vh;
   /* padding-top: 3rem; */
@@ -18,7 +18,7 @@ html{
 }
 
 .dark {
-  background-color: #000000;
+  background-color: #232323;
   --bg: #252525;
   --card-bg: #393e46;
   color: #ffffff;

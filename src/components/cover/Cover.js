@@ -7,29 +7,32 @@ import Quote from "../quotes/Quote";
 // const VISITOR_COUNT = 1234; // Placeholder, replace with real data if needed
 
 function Cover() {
-  const [dateTime, setDateTime] = useState(new Date());
+  // const [dateTime, setDateTime] = useState(new Date());
 
-  useEffect(() => {
-    const timer = setInterval(() => setDateTime(new Date()), 1000);
-    return () => clearInterval(timer);
-  }, []);
+  // useEffect(() => {
+  //   const timer = setInterval(() => setDateTime(new Date()), 1000);
+  //   return () => clearInterval(timer);
+  // }, []);
 
   return (
-    <section className="cover-section" >
-      <Aurora className="aurora-bg" colorStops={["#5227ff", "#7cff67", "#5227ff"]}
-  blend={0.5}
-  amplitude={1.0}
-  speed={0.5} />
+    <section className="cover-section">
+      <Aurora
+        className="aurora-bg"
+        colorStops={["#DFB2F4", "#55D6C2", "#DFB2F4"]}
+        blend={0.5}
+        amplitude={1.0}
+        speed={0.5}
+      />
       <div className="cover-root">
         {/* <div className="cover-corner cover-top-left fade-in">
           <FaEye className="cover-eye" />
           <span className="cover-visitors">{VISITOR_COUNT}</span>
         </div> */}
-        <div className="cover-corner cover-top-right fade-in">
+        {/* <div className="cover-corner cover-top-right fade-in">
           {dateTime.toLocaleDateString()}
           <br />
           {dateTime.toLocaleTimeString()}
-        </div>
+        </div> */}
         <div className="cover-center fade-in">
           <h1 className="cover-title">Akhil Santhosh</h1>
           <p className="cover-subtitle">
@@ -56,7 +59,7 @@ function Cover() {
         <div className="quotes">
           <Quote />
         </div>
-      </div> 
+      </div>
     </section>
   );
 }
