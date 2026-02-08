@@ -8,8 +8,15 @@ const ProjectsNew = () => {
       title: "Job Portal Backend System",
       description: "RESTful API system built with Spring Boot featuring MVC architecture, MySQL integration, job listings, and user management modules.",
       tech: ["Java", "Spring Boot", "MySQL", "REST API", "Postman"],
-      github: "https://github.com/Akhil-vk18",
+      github: "https://github.com/Akhil-vk18/JobPortal-backend",
       period: "Nov 2025 - Dec 2025"
+    },
+    {
+      title: "Finance Tracker",
+      description: "Personal finance management application for tracking expenses, income, and budgets with data visualization and reporting features.",
+      tech: ["Java", "Spring Boot", "MySQL", "REST API"],
+      github: "https://github.com/Akhil-vk18/finance-tracker",
+      period: "2024"
     },
     {
       title: "AI-Doctor",

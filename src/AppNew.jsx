@@ -14,19 +14,19 @@ import { Analytics } from '@vercel/analytics/react';
 function AppNew() {
   const [activeSection, setActiveSection] = useState('introduction');
 
+  const handleNavigate = (sectionId) => {
+    setActiveSection(sectionId);
+  };
+
   const sections = {
     introduction: <Introduction />,
-    about: <About />,
+    about: <About onNavigate={handleNavigate} />,
     projects: <ProjectsNew />,
     skills: <SkillsNew />,
     experience: <ExperienceNew />,
     education: <Education />,
     contact: <ContactNew />,
     stats: <Stats />,
-  };
-
-  const handleNavigate = (sectionId) => {
-    setActiveSection(sectionId);
   };
 
   return (
