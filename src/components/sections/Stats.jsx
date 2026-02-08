@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaGithub, FaMapMarkerAlt, FaBriefcase, FaEye, FaHeart, FaStar, FaCodeBranch } from 'react-icons/fa';
+import { FaGithub, FaMapMarkerAlt, FaBriefcase, FaStar, FaCodeBranch } from 'react-icons/fa';
 
 const Stats = () => {
   const [githubStats, setGithubStats] = useState({
@@ -15,10 +15,18 @@ const Stats = () => {
     const fetchGithubStats = async () => {
       try {
         const username = 'Akhil-vk18';
-        const userResponse = await fetch(`https://api.github.com/users/${username}`);
-        const userData = await userResponse.json();
         
-        const reposResponse = await fetch(`https://api.github.com/users/${username}/repos?per_page=100`);
+        // Fetch user data and repos in parallel for faster loading
+        const [userResponse, reposResponse] = await Promise.all([
+          fetch(`https://api.github.com/users/${username}`),
+          fetch(`https://api.github.com/users/${username}/repos?per_page=100`)
+        ]);
+        
+        if (!userResponse.ok || !reposResponse.ok) {
+          throw new Error(`API request failed: User(${userResponse.status}), Repos(${reposResponse.status})`);
+        }
+        
+        const userData = await userResponse.json();
         const reposData = await reposResponse.json();
         
         const totalStars = reposData.reduce((acc, repo) => acc + repo.stargazers_count, 0);
@@ -32,7 +40,8 @@ const Stats = () => {
         });
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching GitHub stats:', error);
+        console.error('Error fetching GitHub stats:', error.message || error);
+        // Keep loading false to show fallback values
         setLoading(false);
       }
     };
