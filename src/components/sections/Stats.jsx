@@ -11,6 +11,15 @@ const Stats = () => {
   });
   const [loading, setLoading] = useState(true);
 
+  // GitHub contribution colors
+  const CONTRIBUTION_COLORS = ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'];
+  
+  // Grid dimensions
+  const CELL_SIZE = 10; // px
+  const CELL_GAP = 3; // px
+  const DAYS_PER_WEEK = 7;
+  const GRID_HEIGHT = DAYS_PER_WEEK * CELL_SIZE + (DAYS_PER_WEEK - 1) * CELL_GAP; // 88px
+
   useEffect(() => {
     const fetchGithubStats = async () => {
       try {
@@ -106,46 +115,95 @@ const Stats = () => {
           transition={{ delay: 0.5 }}
           className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 mb-8"
         >
-          <div className="flex justify-between items-center mb-6">
-            <h3 className="text-lg font-semibold text-white">GitHub Activity</h3>
-            <span className="text-xs text-gray-500">Last 365 days</span>
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-semibold text-white">GitHub Contributions</h3>
+            <span className="text-xs text-gray-500">Last year</span>
           </div>
-          <div className="grid grid-cols-52 gap-1 overflow-x-auto">
-            {[...Array(365)].map((_, i) => {
-              // Create a more realistic pattern - more activity on weekdays, some weeks with higher activity
-              const dayOfWeek = i % 7;
-              const weekOfYear = Math.floor(i / 7);
-              let baseIntensity = 0;
+          
+          {/* Contribution Graph */}
+          <div className="overflow-x-auto">
+            <div className="inline-block min-w-full">
+              {/* Month labels */}
+              <div className="flex mb-1 ml-8">
+                {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map((month, index) => (
+                  <div
+                    key={month}
+                    className="text-xs text-gray-500"
+                    style={{
+                      width: `${(100 / 12)}%`,
+                      textAlign: 'left',
+                    }}
+                  >
+                    {month}
+                  </div>
+                ))}
+              </div>
               
-              // Less activity on weekends (days 5 and 6)
-              if (dayOfWeek < 5) {
-                baseIntensity = Math.floor(Math.random() * 4) + 1;
-              } else {
-                baseIntensity = Math.floor(Math.random() * 3);
-              }
+              {/* Graph with day labels */}
+              <div className="flex">
+                {/* Day labels */}
+                <div className="flex flex-col justify-between pr-2 text-xs text-gray-500" style={{ height: `${GRID_HEIGHT}px` }}>
+                  <div style={{ lineHeight: '10px' }}>Mon</div>
+                  <div style={{ lineHeight: '10px' }}>Wed</div>
+                  <div style={{ lineHeight: '10px' }}>Fri</div>
+                </div>
+                
+                {/* Contribution grid - organized by weeks */}
+                <div className="flex gap-[3px]">
+                  {[...Array(53)].map((_, weekIndex) => (
+                    <div key={weekIndex} className="flex flex-col gap-[3px]">
+                      {[...Array(7)].map((_, dayIndex) => {
+                        // Calculate contribution intensity
+                        let intensity = 0;
+                        
+                        // More activity on weekdays
+                        if (dayIndex >= 1 && dayIndex <= 5) {
+                          intensity = Math.floor(Math.random() * 5);
+                        } else {
+                          intensity = Math.floor(Math.random() * 3);
+                        }
+                        
+                        // Some weeks have more activity
+                        if (weekIndex % 4 === 0) {
+                          intensity = Math.min(4, intensity + 1);
+                        }
+                        
+                        // Recent weeks have more activity
+                        if (weekIndex > 45) {
+                          intensity = Math.min(4, intensity + 1);
+                        }
+                        
+                        const contributionCount = intensity * Math.floor(Math.random() * 3 + 1);
+                        
+                        return (
+                          <div
+                            key={dayIndex}
+                            className="w-[10px] h-[10px] rounded-sm hover:ring-1 hover:ring-white/50 transition-all cursor-pointer"
+                            style={{ backgroundColor: CONTRIBUTION_COLORS[intensity] }}
+                            title={`${contributionCount} contributions`}
+                          />
+                        );
+                      })}
+                    </div>
+                  ))}
+                </div>
+              </div>
               
-              // Some weeks have higher activity
-              if (weekOfYear % 3 === 0) {
-                baseIntensity = Math.min(4, baseIntensity + 1);
-              }
-              
-              // Recent weeks have more activity
-              if (i > 320) {
-                baseIntensity = Math.min(4, baseIntensity + 1);
-              }
-              
-              const colors = ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'];
-              const contributionCount = baseIntensity * Math.floor(Math.random() * 3 + 1);
-              
-              return (
-                <div
-                  key={i}
-                  className="w-2.5 h-2.5 rounded-sm"
-                  style={{ backgroundColor: colors[baseIntensity] }}
-                  title={`${contributionCount} contributions`}
-                ></div>
-              );
-            })}
+              {/* Legend */}
+              <div className="flex items-center justify-end gap-2 mt-3 text-xs text-gray-500">
+                <span>Less</span>
+                <div className="flex gap-1">
+                  {CONTRIBUTION_COLORS.map((color, i) => (
+                    <div
+                      key={i}
+                      className="w-[10px] h-[10px] rounded-sm"
+                      style={{ backgroundColor: color }}
+                    />
+                  ))}
+                </div>
+                <span>More</span>
+              </div>
+            </div>
           </div>
         </motion.div>
 
