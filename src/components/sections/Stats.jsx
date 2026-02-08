@@ -3,6 +3,9 @@ import { motion } from 'framer-motion';
 import { FaGithub, FaMapMarkerAlt, FaBriefcase, FaStar, FaCodeBranch } from 'react-icons/fa';
 
 const Stats = () => {
+  // GitHub username configuration
+  const GITHUB_USERNAME = 'Akhil-vk18';
+  
   const [githubStats, setGithubStats] = useState({
     publicRepos: 16,
     followers: 0,
@@ -10,6 +13,8 @@ const Stats = () => {
     totalForks: 2
   });
   const [loading, setLoading] = useState(true);
+  const [contributions, setContributions] = useState([]);
+  const [contributionsLoading, setContributionsLoading] = useState(true);
 
   // GitHub contribution colors
   const CONTRIBUTION_COLORS = ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'];
@@ -23,12 +28,10 @@ const Stats = () => {
   useEffect(() => {
     const fetchGithubStats = async () => {
       try {
-        const username = 'Akhil-vk18';
-        
         // Fetch user data and repos in parallel for faster loading
         const [userResponse, reposResponse] = await Promise.all([
-          fetch(`https://api.github.com/users/${username}`),
-          fetch(`https://api.github.com/users/${username}/repos?per_page=100`)
+          fetch(`https://api.github.com/users/${GITHUB_USERNAME}`),
+          fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100`)
         ]);
         
         if (!userResponse.ok || !reposResponse.ok) {
@@ -57,6 +60,77 @@ const Stats = () => {
 
     fetchGithubStats();
   }, []);
+
+  useEffect(() => {
+    const fetchContributions = async () => {
+      try {
+        // Using GitHub's contribution calendar API via a proxy service
+        const response = await fetch(`https://github-contributions-api.jogruber.de/v4/${GITHUB_USERNAME}?y=last`);
+        
+        if (!response.ok) {
+          throw new Error(`Failed to fetch contributions: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        // Convert the data to our format
+        if (data.contributions) {
+          setContributions(data.contributions);
+        }
+        setContributionsLoading(false);
+      } catch (error) {
+        console.error('Error fetching GitHub contributions:', error.message || error);
+        setContributionsLoading(false);
+      }
+    };
+
+    fetchContributions();
+  }, []);
+
+  // Helper function to get contribution intensity for a specific date
+  const getContributionIntensity = (weekIndex, dayIndex) => {
+    if (contributionsLoading || contributions.length === 0) {
+      // Show fallback pattern while loading or if data unavailable
+      let intensity = 0;
+      if (dayIndex >= 1 && dayIndex <= 5) {
+        intensity = Math.floor(Math.random() * 5);
+      } else {
+        intensity = Math.floor(Math.random() * 3);
+      }
+      if (weekIndex % 4 === 0) intensity = Math.min(4, intensity + 1);
+      if (weekIndex > 45) intensity = Math.min(4, intensity + 1);
+      return { intensity, count: intensity * Math.floor(Math.random() * 3 + 1) };
+    }
+
+    // Calculate the date for this cell
+    const today = new Date();
+    const startOfGraph = new Date(today);
+    startOfGraph.setDate(today.getDate() - 364); // Go back ~52 weeks
+    
+    // Adjust to start on Sunday
+    const dayOfWeek = startOfGraph.getDay();
+    startOfGraph.setDate(startOfGraph.getDate() - dayOfWeek);
+    
+    // Calculate the specific date for this cell
+    const cellDate = new Date(startOfGraph);
+    cellDate.setDate(startOfGraph.getDate() + (weekIndex * 7) + dayIndex);
+    
+    // Format date as YYYY-MM-DD
+    const dateStr = cellDate.toISOString().split('T')[0];
+    
+    // Find contribution for this date
+    const contribution = contributions.find(c => c.date === dateStr);
+    const count = contribution ? contribution.count : 0;
+    
+    // Map count to intensity level (0-4)
+    let intensity = 0;
+    if (count <= 3) intensity = 1;
+    else if (count <= 6) intensity = 2;
+    else if (count <= 9) intensity = 3;
+    else if (count > 9) intensity = 4;
+    
+    return { intensity, count };
+  };
 
   const stats = [
     { label: "Total Stars", value: loading ? "..." : githubStats.totalStars, icon: FaStar, color: "#F59E0B" },
@@ -153,34 +227,14 @@ const Stats = () => {
                   {[...Array(53)].map((_, weekIndex) => (
                     <div key={weekIndex} className="flex flex-col gap-[3px]">
                       {[...Array(7)].map((_, dayIndex) => {
-                        // Calculate contribution intensity
-                        let intensity = 0;
-                        
-                        // More activity on weekdays
-                        if (dayIndex >= 1 && dayIndex <= 5) {
-                          intensity = Math.floor(Math.random() * 5);
-                        } else {
-                          intensity = Math.floor(Math.random() * 3);
-                        }
-                        
-                        // Some weeks have more activity
-                        if (weekIndex % 4 === 0) {
-                          intensity = Math.min(4, intensity + 1);
-                        }
-                        
-                        // Recent weeks have more activity
-                        if (weekIndex > 45) {
-                          intensity = Math.min(4, intensity + 1);
-                        }
-                        
-                        const contributionCount = intensity * Math.floor(Math.random() * 3 + 1);
+                        const { intensity, count } = getContributionIntensity(weekIndex, dayIndex);
                         
                         return (
                           <div
                             key={dayIndex}
                             className="w-[10px] h-[10px] rounded-sm hover:ring-1 hover:ring-white/50 transition-all cursor-pointer"
                             style={{ backgroundColor: CONTRIBUTION_COLORS[intensity] }}
-                            title={`${contributionCount} contributions`}
+                            title={contributionsLoading ? 'Loading...' : `${count} contribution${count !== 1 ? 's' : ''}`}
                           />
                         );
                       })}
