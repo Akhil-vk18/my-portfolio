@@ -4,10 +4,10 @@ import { FaGithub, FaMapMarkerAlt, FaBriefcase, FaStar, FaCodeBranch } from 'rea
 
 const Stats = () => {
   const [githubStats, setGithubStats] = useState({
-    publicRepos: '15+',
-    followers: '89',
-    totalStars: '0',
-    totalForks: '0'
+    publicRepos: 16,
+    followers: 0,
+    totalStars: 0,
+    totalForks: 2
   });
   const [loading, setLoading] = useState(true);
 

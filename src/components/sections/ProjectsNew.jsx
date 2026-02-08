@@ -13,10 +13,10 @@ const ProjectsNew = () => {
     },
     {
       title: "Finance Tracker",
-      description: "Personal finance management application for tracking expenses, income, and budgets with data visualization and reporting features.",
-      tech: ["Java", "Spring Boot", "MySQL", "REST API"],
-      github: "https://github.com/Akhil-vk18/finance-tracker",
-      period: "2024"
+      description: "Python project to track personal finances with CSV-based data storage and graph plotting capabilities using pandas and matplotlib.",
+      tech: ["Python", "Pandas", "Matplotlib", "Streamlit", "CSV"],
+      github: "https://github.com/Akhil-vk18/finance-tracker-",
+      period: "Feb 2025"
     },
     {
       title: "AI-Doctor",
