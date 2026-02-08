@@ -12,9 +12,15 @@ const fallbackQuotes = [
 const url ="https://thequoteshub.com/api/tags/computers";
 
 function Quote(){
-    const [quote,setQuote]=useState(fallbackQuotes[0]);
+    // Initialize with a random fallback quote
+    const [quote,setQuote]=useState(() => {
+        const randomIndex = Math.floor(Math.random() * fallbackQuotes.length);
+        return fallbackQuotes[randomIndex];
+    });
     const [loading, setLoading] = useState(true); 
+    
     useEffect(()=>{
+        // Fetch a new random quote on each component mount (page refresh)
         fetch(url)
         .then((response)=>response.json())
         .then((quotes)=>{

@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FaDownload, FaEnvelope, FaGithub, FaLinkedin } from 'react-icons/fa';
+import MultilingualName from '../multilingual/MultilingualName';
 
 const Introduction = () => {
   return (
@@ -20,6 +21,16 @@ const Introduction = () => {
         >
           Akhil Santhosh
         </motion.h1>
+
+        {/* Multilingual Name Display */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          className="mb-6 flex justify-start"
+        >
+          <MultilingualName interval={2500} />
+        </motion.div>
 
         {/* Tagline */}
         <motion.p
