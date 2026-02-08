@@ -28,7 +28,7 @@ const Introduction = () => {
           transition={{ delay: 0.4 }}
           className="text-xl md:text-2xl text-gray-400 mb-6 font-mono"
         >
-          Coder by day, problem-solver by night ☕
+          Building scalable solutions, one API at a time 🚀
         </motion.p>
 
         {/* Bio Paragraph */}
