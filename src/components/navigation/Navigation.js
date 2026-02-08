@@ -52,7 +52,14 @@ function Navigation({ darkmode, setDarkMode }) {
             className={activeLink === "#profile" ? "active" : ""}
             onClick={() => handleLinkClick("#profile")}
           >
-            Profile
+            About
+          </a>
+          <a
+            href="#experience"
+            className={activeLink === "#experience" ? "active" : ""}
+            onClick={() => handleLinkClick("#experience")}
+          >
+            Experience
           </a>
           <a
             href="#skills"
