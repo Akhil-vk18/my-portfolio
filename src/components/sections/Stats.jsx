@@ -1,13 +1,50 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaGithub, FaMapMarkerAlt, FaBriefcase, FaEye, FaHeart } from 'react-icons/fa';
+import { FaGithub, FaMapMarkerAlt, FaBriefcase, FaEye, FaHeart, FaStar, FaCodeBranch } from 'react-icons/fa';
 
 const Stats = () => {
+  const [githubStats, setGithubStats] = useState({
+    publicRepos: '15+',
+    followers: '89',
+    totalStars: '0',
+    totalForks: '0'
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchGithubStats = async () => {
+      try {
+        const username = 'Akhil-vk18';
+        const userResponse = await fetch(`https://api.github.com/users/${username}`);
+        const userData = await userResponse.json();
+        
+        const reposResponse = await fetch(`https://api.github.com/users/${username}/repos?per_page=100`);
+        const reposData = await reposResponse.json();
+        
+        const totalStars = reposData.reduce((acc, repo) => acc + repo.stargazers_count, 0);
+        const totalForks = reposData.reduce((acc, repo) => acc + repo.forks_count, 0);
+        
+        setGithubStats({
+          publicRepos: userData.public_repos,
+          followers: userData.followers,
+          totalStars,
+          totalForks
+        });
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching GitHub stats:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchGithubStats();
+  }, []);
+
   const stats = [
-    { label: "Total Views", value: "1,234", icon: FaEye, color: "#8B5CF6" },
-    { label: "Appreciation", value: "567", icon: FaHeart, color: "#EC4899" },
-    { label: "Public Repos", value: "15+", icon: FaGithub, color: "#3B82F6" },
-    { label: "Followers", value: "89", icon: FaGithub, color: "#06B6D4" },
+    { label: "Total Stars", value: loading ? "..." : githubStats.totalStars, icon: FaStar, color: "#F59E0B" },
+    { label: "Total Forks", value: loading ? "..." : githubStats.totalForks, icon: FaCodeBranch, color: "#10B981" },
+    { label: "Public Repos", value: loading ? "..." : githubStats.publicRepos, icon: FaGithub, color: "#3B82F6" },
+    { label: "Followers", value: loading ? "..." : githubStats.followers, icon: FaGithub, color: "#8B5CF6" },
   ];
 
   const profileInfo = [
@@ -34,20 +71,20 @@ const Stats = () => {
         </motion.div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
           {stats.map((stat, index) => {
             const Icon = stat.icon;
             return (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="glass-effect rounded-xl p-6 hover:shadow-glow transition-all duration-300"
+                className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 hover:border-white/20 transition-all duration-300"
               >
-                <Icon className="text-3xl mb-3" style={{ color: stat.color }} />
-                <p className="text-4xl font-bold text-white mb-1">{stat.value}</p>
-                <p className="text-sm text-gray-400">{stat.label}</p>
+                <Icon className="text-2xl mb-3" style={{ color: stat.color }} />
+                <p className="text-3xl font-bold text-white mb-1">{stat.value}</p>
+                <p className="text-xs text-gray-400 uppercase tracking-wider">{stat.label}</p>
               </motion.div>
             );
           })}
@@ -58,13 +95,13 @@ const Stats = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="glass-effect rounded-xl p-6 mb-8"
+          className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 mb-8"
         >
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-xl font-semibold text-white">GitHub Contributions</h3>
-            <span className="text-sm text-gray-400">Last 365 days</span>
+          <div className="flex justify-between items-center mb-6">
+            <h3 className="text-lg font-semibold text-white">GitHub Activity</h3>
+            <span className="text-xs text-gray-500">Last 365 days</span>
           </div>
-          <div className="grid grid-cols-52 gap-1">
+          <div className="grid grid-cols-52 gap-1 overflow-x-auto">
             {[...Array(365)].map((_, i) => {
               // Create a more realistic pattern - more activity on weekdays, some weeks with higher activity
               const dayOfWeek = i % 7;
@@ -94,7 +131,7 @@ const Stats = () => {
               return (
                 <div
                   key={i}
-                  className="w-3 h-3 rounded-sm"
+                  className="w-2.5 h-2.5 rounded-sm"
                   style={{ backgroundColor: colors[baseIntensity] }}
                   title={`${contributionCount} contributions`}
                 ></div>
@@ -104,7 +141,7 @@ const Stats = () => {
         </motion.div>
 
         {/* Profile Info */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {profileInfo.map((info, index) => {
             const Icon = info.icon;
             return (
@@ -113,11 +150,11 @@ const Stats = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.7 + index * 0.1 }}
-                className="glass-effect rounded-xl p-4 flex items-center gap-3"
+                className="bg-white/5 backdrop-blur-sm rounded-lg p-4 border border-white/10 flex items-center gap-3"
               >
-                <Icon className="text-accent-purple text-xl" />
+                <Icon className="text-accent-purple text-lg" />
                 <div>
-                  <p className="text-xs text-gray-400">{info.label}</p>
+                  <p className="text-xs text-gray-500 uppercase tracking-wider">{info.label}</p>
                   <p className="text-sm text-white font-medium">{info.value}</p>
                 </div>
               </motion.div>
