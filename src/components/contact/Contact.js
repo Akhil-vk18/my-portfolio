@@ -13,7 +13,7 @@ function Contact() {
       <h2>Contact Me</h2>
       <div className="contact-icons">
         <div className="icon-item">
-          <a href="mailto:akhilsanthosh043@gmail.com" className="email">
+          <a href="mailto:connectwithakhilsanthosh@gmail.com" className="email">
             <span className=" icon">
               <FaEnvelope />
             </span>
