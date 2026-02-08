@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
-// import { FaEye } from "react-icons/fa";
+import React from "react";
 import "./Cover.css";
 import RotatingText from "../../reactbits/RotatingText/RotatingText";
 import Aurora from "../../reactbits/Aurora/Aurora";
 import Quote from "../quotes/Quote";
-// const VISITOR_COUNT = 1234; // Placeholder, replace with real data if needed
 
 function Cover() {
   // const [dateTime, setDateTime] = useState(new Date());
@@ -36,12 +34,12 @@ function Cover() {
         <div className="cover-center fade-in">
           <h1 className="cover-title">Akhil Santhosh</h1>
           <p className="cover-subtitle">
-            Software Developer | Full Stack Enthusiast
+            Java Backend Developer | Spring Boot Specialist
           </p>
           <div className="wrapper">
             <div className="rotating-text">
               <RotatingText
-                texts={["Reduce", "Reuse", "Refactor", "Remove"]}
+                texts={["Build", "Deploy", "Optimize", "Scale"]}
                 mainClassName="px-2 sm:px-2 md:px-3 bg-cyan-300 text-black overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center rounded-lg"
                 staggerFrom={"last"}
                 initial={{ y: "100%" }}
@@ -53,7 +51,7 @@ function Cover() {
                 rotationInterval={2000}
               />
             </div>
-            <span className="plain-code">Code</span>
+            <span className="plain-code">Backend APIs</span>
           </div>
         </div>
         <div className="quotes">

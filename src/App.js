@@ -5,6 +5,8 @@ import Profile from "./components/profile/Profile";
 import "./App.css";
 import Skills from "./components/skills/Skills";
 import Footer from "./components/footer/Footer";
+import Experience from "./components/experience/Experience";
+import Certifications from "./components/certifications/Certifications";
 // import ToggleTheme from './components/ToggleTheme';
 import React, { useState } from "react";
 import Cover from "./components/cover/Cover";
@@ -22,6 +24,23 @@ function App() {
 
         <Profile />
         <hr />
+        
+        <AnimatedContent
+          distance={150}
+          direction="vertical"
+          reverse={false}
+          duration={1.5}
+          ease="power3.out"
+          initialOpacity={0.2}
+          animateOpacity
+          scale={0.8}
+          threshold={0.1}
+          delay={0.1}
+        >
+          <Experience />
+        </AnimatedContent>
+        <hr />
+        
         <AnimatedContent
           distance={150}
           direction="vertical"
@@ -37,6 +56,26 @@ function App() {
           <Skills />
         </AnimatedContent>
         <hr />
+        
+        <Projects />
+        <hr />
+        
+        <AnimatedContent
+          distance={150}
+          direction="vertical"
+          reverse={false}
+          duration={1.5}
+          ease="power3.out"
+          initialOpacity={0.2}
+          animateOpacity
+          scale={0.8}
+          threshold={0.1}
+          delay={0.1}
+        >
+          <Certifications />
+        </AnimatedContent>
+        <hr />
+        
         <Projects />
         <hr />
         <Contact />
