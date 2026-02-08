@@ -7,6 +7,7 @@ import Skills from "./components/skills/Skills";
 import Footer from "./components/footer/Footer";
 import Experience from "./components/experience/Experience";
 import Certifications from "./components/certifications/Certifications";
+// import ToggleTheme from './components/ToggleTheme';
 import React, { useState } from "react";
 import Cover from "./components/cover/Cover";
 import AnimatedContent from "./reactbits/AnimatedContent/AnimatedContent";
@@ -75,6 +76,8 @@ function App() {
         </AnimatedContent>
         <hr />
         
+        <Projects />
+        <hr />
         <Contact />
         <Footer />
       </div>
