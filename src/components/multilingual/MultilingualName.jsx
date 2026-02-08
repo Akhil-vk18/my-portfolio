@@ -15,7 +15,7 @@ const nameTranslations = [
   { language: 'Marathi', name: 'अखिल', script: 'Devanagari' },
 ];
 
-const MultilingualName = ({ interval = 2000, className = '' }) => {
+const MultilingualName = ({ interval = 2500, className = '' }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
