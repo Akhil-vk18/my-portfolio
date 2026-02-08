@@ -55,22 +55,22 @@ const ExperienceNew = () => {
 
                 {/* Latest Badge */}
                 {exp.current && (
-                  <span className="absolute left-6 md:left-14 top-2 px-2 py-1 bg-accent-purple/20 text-accent-purple text-xs rounded-full">
+                  <span className="absolute left-6 md:left-14 top-2 px-2 py-1 bg-accent-purple/20 text-accent-purple text-xs rounded-full z-10">
                     Latest
                   </span>
                 )}
 
                 {/* Content Card */}
-                <div className="glass-effect rounded-xl p-6 hover:bg-white/10 transition-all duration-300">
+                <div className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 hover:border-white/20 transition-all duration-300">
                   <div className="flex items-start gap-3 mb-3">
-                    <FaBriefcase className="text-2xl text-accent-purple mt-1" />
+                    <FaBriefcase className="text-xl text-accent-purple mt-1" />
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold text-white">{exp.role}</h3>
-                      <p className="text-accent-blue">{exp.organization}</p>
+                      <h3 className="text-lg font-bold text-white">{exp.role}</h3>
+                      <p className="text-accent-blue text-sm">{exp.organization}</p>
                     </div>
                   </div>
                   
-                  <div className="flex flex-wrap gap-4 text-sm text-gray-400 mb-4">
+                  <div className="flex flex-wrap gap-4 text-xs text-gray-500 mb-4">
                     <p className="flex items-center gap-2">
                       <FaCalendar className="text-accent-purple" />
                       {exp.duration}
@@ -83,8 +83,8 @@ const ExperienceNew = () => {
 
                   <ul className="space-y-2">
                     {exp.description.map((item, i) => (
-                      <li key={i} className="text-gray-300 text-sm flex items-start gap-2">
-                        <span className="text-accent-purple mt-1">▹</span>
+                      <li key={i} className="text-gray-400 text-sm flex items-start gap-2 leading-relaxed">
+                        <span className="text-accent-purple mt-1">•</span>
                         {item}
                       </li>
                     ))}

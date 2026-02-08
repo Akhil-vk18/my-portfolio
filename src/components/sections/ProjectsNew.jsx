@@ -8,15 +8,15 @@ const ProjectsNew = () => {
       title: "Job Portal Backend System",
       description: "RESTful API system built with Spring Boot featuring MVC architecture, MySQL integration, job listings, and user management modules.",
       tech: ["Java", "Spring Boot", "MySQL", "REST API", "Postman"],
-      github: "https://github.com/Akhil-vk18/JobPortal-backend",
+      github: "https://github.com/Akhil-vk18/job-portal-backend",
       period: "Nov 2025 - Dec 2025"
     },
     {
       title: "Finance Tracker",
-      description: "Personal finance management application for tracking expenses, income, and budgets with data visualization and reporting features.",
-      tech: ["Java", "Spring Boot", "MySQL", "REST API"],
-      github: "https://github.com/Akhil-vk18/finance-tracker",
-      period: "2024"
+      description: "Python project to track personal finances with CSV-based data storage and graph plotting capabilities using pandas and matplotlib.",
+      tech: ["Python", "Pandas", "Matplotlib", "Streamlit", "CSV"],
+      github: "https://github.com/Akhil-vk18/finance-tracker-",
+      period: "Feb 2025"
     },
     {
       title: "AI-Doctor",
@@ -59,25 +59,25 @@ const ProjectsNew = () => {
         </motion.div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {projects.map((project, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              className="glass-effect rounded-xl p-6 card-hover group"
+              className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 hover:border-white/20 transition-all duration-300 group"
             >
               {/* Period */}
-              <p className="text-xs text-accent-purple font-mono mb-2">{project.period}</p>
+              <p className="text-xs text-accent-purple font-mono mb-3 uppercase tracking-wider">{project.period}</p>
               
               {/* Title */}
-              <h3 className="text-xl font-bold text-white mb-3 group-hover:text-accent-purple transition-colors">
+              <h3 className="text-lg font-bold text-white mb-3 group-hover:text-accent-purple transition-colors">
                 {project.title}
               </h3>
               
               {/* Description */}
-              <p className="text-gray-400 text-sm mb-4 line-clamp-3">
+              <p className="text-gray-400 text-sm mb-4 leading-relaxed">
                 {project.description}
               </p>
               
@@ -86,7 +86,7 @@ const ProjectsNew = () => {
                 {project.tech.map((tech, i) => (
                   <span
                     key={i}
-                    className="text-xs px-2 py-1 bg-white/5 rounded-full text-gray-300 border border-white/10"
+                    className="text-xs px-2 py-1 bg-white/5 rounded text-gray-400 border border-white/10"
                   >
                     {tech}
                   </span>
@@ -94,24 +94,24 @@ const ProjectsNew = () => {
               </div>
               
               {/* Links */}
-              <div className="flex gap-3">
+              <div className="flex gap-4">
                 <a
                   href={project.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm text-gray-400 hover:text-accent-blue transition-colors"
+                  className="flex items-center gap-2 text-xs text-gray-400 hover:text-white transition-colors"
                 >
                   <FaGithub />
-                  Code
+                  View Code
                 </a>
                 <a
                   href={project.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm text-gray-400 hover:text-accent-purple transition-colors"
+                  className="flex items-center gap-2 text-xs text-gray-400 hover:text-accent-purple transition-colors"
                 >
                   <FaExternalLinkAlt />
-                  Learn More
+                  Details
                 </a>
               </div>
             </motion.div>

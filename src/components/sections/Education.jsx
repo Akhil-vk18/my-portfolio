@@ -66,22 +66,22 @@ const Education = () => {
 
                 {/* Latest Badge */}
                 {index === 0 && (
-                  <span className="absolute left-6 md:left-14 top-2 px-2 py-1 bg-accent-purple/20 text-accent-purple text-xs rounded-full">
+                  <span className="absolute left-6 md:left-14 top-2 px-2 py-1 bg-accent-purple/20 text-accent-purple text-xs rounded-full z-10">
                     Latest
                   </span>
                 )}
 
                 {/* Content Card */}
-                <div className="glass-effect rounded-xl p-6 hover:bg-white/10 transition-all duration-300">
+                <div className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 hover:border-white/20 transition-all duration-300">
                   <div className="flex items-start gap-3 mb-3">
-                    <FaGraduationCap className="text-2xl text-accent-purple mt-1" />
+                    <FaGraduationCap className="text-xl text-accent-purple mt-1" />
                     <div>
-                      <h3 className="text-xl font-bold text-white">{edu.degree}</h3>
-                      <p className="text-accent-blue">{edu.college}</p>
+                      <h3 className="text-lg font-bold text-white">{edu.degree}</h3>
+                      <p className="text-accent-blue text-sm">{edu.college}</p>
                     </div>
                   </div>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-gray-400">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-gray-500">
                     <p>📍 {edu.location}</p>
                     <p>📅 {edu.duration}</p>
                     <p>📊 {edu.cgpa}</p>
