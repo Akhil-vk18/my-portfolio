@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const About = () => {
+const About = ({ onNavigate }) => {
   return (
     <section id="about" className="min-h-screen flex items-center justify-center p-8">
       <motion.div
@@ -42,10 +42,20 @@ const About = () => {
           </p>
         </div>
 
-        {/* Navigation Hint */}
-        <div className="mt-12 pt-6 border-t border-dark-border flex justify-between text-sm text-gray-500">
-          <span>← Introduction</span>
-          <span>Projects →</span>
+        {/* Navigation Buttons */}
+        <div className="mt-12 pt-6 border-t border-dark-border flex justify-between text-sm">
+          <button 
+            onClick={() => onNavigate && onNavigate('introduction')}
+            className="text-gray-500 hover:text-accent-purple transition-colors cursor-pointer"
+          >
+            ← Introduction
+          </button>
+          <button 
+            onClick={() => onNavigate && onNavigate('projects')}
+            className="text-gray-500 hover:text-accent-purple transition-colors cursor-pointer"
+          >
+            Projects →
+          </button>
         </div>
       </motion.div>
     </section>

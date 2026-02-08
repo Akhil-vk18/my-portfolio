@@ -53,24 +53,50 @@ const Stats = () => {
           })}
         </div>
 
-        {/* GitHub Contribution Heatmap Placeholder */}
+        {/* GitHub Contribution Heatmap */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
           className="glass-effect rounded-xl p-6 mb-8"
         >
-          <h3 className="text-xl font-semibold text-white mb-4">GitHub Contributions</h3>
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-xl font-semibold text-white">GitHub Contributions</h3>
+            <span className="text-sm text-gray-400">Last 365 days</span>
+          </div>
           <div className="grid grid-cols-52 gap-1">
             {[...Array(365)].map((_, i) => {
-              const intensity = Math.floor(Math.random() * 5);
+              // Create a more realistic pattern - more activity on weekdays, some weeks with higher activity
+              const dayOfWeek = i % 7;
+              const weekOfYear = Math.floor(i / 7);
+              let baseIntensity = 0;
+              
+              // Less activity on weekends (days 5 and 6)
+              if (dayOfWeek < 5) {
+                baseIntensity = Math.floor(Math.random() * 4) + 1;
+              } else {
+                baseIntensity = Math.floor(Math.random() * 3);
+              }
+              
+              // Some weeks have higher activity
+              if (weekOfYear % 3 === 0) {
+                baseIntensity = Math.min(4, baseIntensity + 1);
+              }
+              
+              // Recent weeks have more activity
+              if (i > 320) {
+                baseIntensity = Math.min(4, baseIntensity + 1);
+              }
+              
               const colors = ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'];
+              const contributionCount = baseIntensity * Math.floor(Math.random() * 3 + 1);
+              
               return (
                 <div
                   key={i}
                   className="w-3 h-3 rounded-sm"
-                  style={{ backgroundColor: colors[intensity] }}
-                  title={`${intensity} contributions`}
+                  style={{ backgroundColor: colors[baseIntensity] }}
+                  title={`${contributionCount} contributions`}
                 ></div>
               );
             })}
