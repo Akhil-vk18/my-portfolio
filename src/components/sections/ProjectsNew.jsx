@@ -109,89 +109,93 @@ const ProjectsNew = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.08 }}
-              className="bg-white/5 backdrop-blur-sm rounded-lg border border-white/10 hover:border-accent-purple/40 transition-all duration-300 group flex flex-col overflow-hidden"
+              className="relative bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 hover:border-accent-purple/40 transition-all duration-300 group flex flex-col"
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
+              onFocus={() => setHoveredIndex(index)}
+              onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setHoveredIndex(null); }}
+              tabIndex={project.live ? 0 : undefined}
             >
-              {/* Live preview — slides in from top on hover for deployed projects */}
+              {/* Floating preview tooltip — appears above the card, does NOT change card height */}
               {project.live && (
                 <div
-                  className="transition-all duration-500 ease-in-out overflow-hidden"
-                  style={{ maxHeight: hoveredIndex === index ? '160px' : '0px' }}
+                  className="absolute bottom-full left-0 right-0 mb-2 z-50 pointer-events-none transition-all duration-300"
+                  style={{
+                    opacity: hoveredIndex === index ? 1 : 0,
+                    transform: hoveredIndex === index ? 'translateY(0)' : 'translateY(6px)',
+                  }}
                 >
-                  <div className="relative">
+                  <div className="rounded-lg overflow-hidden border border-white/20 shadow-2xl">
                     <img
                       src={`https://image.thum.io/get/width/600/crop/320/${project.live}`}
                       alt={`${project.title} preview`}
-                      className="w-full object-cover object-top"
-                      style={{ height: '160px' }}
+                      className="w-full block"
+                      style={{ height: '160px', objectFit: 'cover', objectPosition: 'top' }}
                       loading="lazy"
+                      decoding="async"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-dark-bg/60 pointer-events-none" />
-                    <span className="absolute bottom-2 right-3 text-xs text-white/70 bg-black/50 px-2 py-0.5 rounded-full backdrop-blur-sm">
-                      Live Preview
-                    </span>
+                    <div className="bg-dark-card/90 backdrop-blur-sm px-3 py-1.5 flex items-center justify-between">
+                      <span className="text-xs text-gray-400">Live Preview</span>
+                      <span className="text-xs text-accent-purple">{project.live}</span>
+                    </div>
                   </div>
                 </div>
               )}
 
-              {/* Card body */}
-              <div className="p-6 flex flex-col flex-1">
-                {/* Header row */}
-                <div className="flex items-center justify-between mb-3">
-                  <p className="text-xs text-gray-500 font-mono uppercase tracking-wider">{project.period}</p>
-                  {project.tag && (
-                    <span className={`text-xs px-2 py-0.5 rounded-full border font-medium ${tagColors[project.tag] || 'bg-white/10 text-gray-400 border-white/20'}`}>
-                      {project.tag}
-                    </span>
-                  )}
-                </div>
+              {/* Header row */}
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-xs text-gray-500 font-mono uppercase tracking-wider">{project.period}</p>
+                {project.tag && (
+                  <span className={`text-xs px-2 py-0.5 rounded-full border font-medium ${tagColors[project.tag] || 'bg-white/10 text-gray-400 border-white/20'}`}>
+                    {project.tag}
+                  </span>
+                )}
+              </div>
 
-                {/* Title */}
-                <h3 className="text-lg font-bold text-white mb-3 group-hover:text-accent-purple transition-colors">
-                  {project.title}
-                </h3>
+              {/* Title */}
+              <h3 className="text-lg font-bold text-white mb-3 group-hover:text-accent-purple transition-colors">
+                {project.title}
+              </h3>
 
-                {/* Description */}
-                <p className="text-gray-400 text-sm mb-4 leading-relaxed flex-1">
-                  {project.description}
-                </p>
+              {/* Description */}
+              <p className="text-gray-400 text-sm mb-4 leading-relaxed flex-1">
+                {project.description}
+              </p>
 
-                {/* Tech Stack */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tech.map((tech, i) => (
-                    <span
-                      key={i}
-                      className="text-xs px-2 py-1 bg-accent-purple/10 rounded text-accent-purple border border-accent-purple/20"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
+              {/* Tech Stack */}
+              <div className="flex flex-wrap gap-2 mb-4">
+                {project.tech.map((tech, i) => (
+                  <span
+                    key={i}
+                    className="text-xs px-2 py-1 bg-accent-purple/10 rounded text-accent-purple border border-accent-purple/20"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
 
-                {/* Links */}
-                <div className="flex gap-4 mt-auto">
+              {/* Links */}
+              <div className="flex gap-4 mt-auto">
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-xs text-gray-400 hover:text-white transition-colors"
+                >
+                  <FaGithub />
+                  View Code
+                </a>
+                {project.live && (
                   <a
-                    href={project.github}
+                    href={project.live}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-xs text-gray-400 hover:text-white transition-colors"
+                    className="flex items-center gap-2 text-xs text-accent-purple hover:text-accent-blue transition-colors font-medium"
                   >
-                    <FaGithub />
-                    View Code
+                    <FaExternalLinkAlt />
+                    Live Demo
                   </a>
-                  {project.live && (
-                    <a
-                      href={project.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-xs text-accent-purple hover:text-accent-blue transition-colors font-medium"
-                    >
-                      <FaExternalLinkAlt />
-                      Live Demo
-                    </a>
-                  )}
-                </div>
+                )}
               </div>
             </motion.div>
           ))}

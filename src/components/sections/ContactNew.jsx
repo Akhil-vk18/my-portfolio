@@ -19,7 +19,8 @@ const ContactNew = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const mailtoLink = `mailto:connectwithakhilsanthosh@gmail.com?subject=Message from ${encodeURIComponent(formData.name)}&body=${encodeURIComponent(formData.message)}`;
+    const body = `From: ${formData.name} <${formData.email}>\n\n${formData.message}`;
+    const mailtoLink = `mailto:connectwithakhilsanthosh@gmail.com?subject=Message from ${encodeURIComponent(formData.name)}&body=${encodeURIComponent(body)}`;
     window.location.href = mailtoLink;
   };
 

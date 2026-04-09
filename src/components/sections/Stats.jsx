@@ -127,6 +127,8 @@ const Stats = () => {
               alt="GitHub contribution activity as space shooter"
               className="rounded-md max-w-full"
               style={{ imageRendering: 'pixelated' }}
+              loading="lazy"
+              decoding="async"
             />
           </div>
         </motion.div>
