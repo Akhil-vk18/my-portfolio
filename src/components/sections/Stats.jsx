@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaGithub, FaMapMarkerAlt, FaBriefcase, FaStar, FaCodeBranch, FaCode } from 'react-icons/fa';
+import { SiSpringboot } from 'react-icons/si';
 
 const Stats = () => {
   // GitHub username configuration
@@ -16,8 +17,8 @@ const Stats = () => {
   const [contributions, setContributions] = useState([]);
   const [contributionsLoading, setContributionsLoading] = useState(true);
 
-  // GitHub contribution colors — purple/indigo palette
-  const CONTRIBUTION_COLORS = ['#0D0D1A', '#1a1a3a', '#2d2d7a', '#4e4ecc', '#6366F1'];
+  // GitHub contribution colors — Spring Boot green palette
+  const CONTRIBUTION_COLORS = ['#0E1A0F', '#1a3a1c', '#2d6b30', '#4e9e52', '#6DB33F'];
   
   // Grid dimensions
   const CELL_SIZE = 10; // px
@@ -64,18 +65,30 @@ const Stats = () => {
   useEffect(() => {
     const fetchContributions = async () => {
       try {
-        // Using GitHub's contribution calendar API via a proxy service
-        const response = await fetch(`https://github-contributions-api.jogruber.de/v4/${GITHUB_USERNAME}?y=last`);
-        
-        if (!response.ok) {
-          throw new Error(`Failed to fetch contributions: ${response.status}`);
+        const currentYear = new Date().getFullYear();
+        const prevYear = currentYear - 1;
+
+        // Fetch both current and previous year in parallel so the heatmap
+        // covers the full last-52-weeks window regardless of year boundary
+        const [resCurrent, resPrev] = await Promise.all([
+          fetch(`https://github-contributions-api.jogruber.de/v4/${GITHUB_USERNAME}?y=${currentYear}`),
+          fetch(`https://github-contributions-api.jogruber.de/v4/${GITHUB_USERNAME}?y=${prevYear}`),
+        ]);
+
+        const merged = [];
+
+        if (resPrev.ok) {
+          const dataPrev = await resPrev.json();
+          if (dataPrev.contributions) merged.push(...dataPrev.contributions);
         }
-        
-        const data = await response.json();
-        
-        // Convert the data to our format
-        if (data.contributions) {
-          setContributions(data.contributions);
+
+        if (resCurrent.ok) {
+          const dataCurrent = await resCurrent.json();
+          if (dataCurrent.contributions) merged.push(...dataCurrent.contributions);
+        }
+
+        if (merged.length > 0) {
+          setContributions(merged);
         }
         setContributionsLoading(false);
       } catch (error) {
@@ -134,9 +147,9 @@ const Stats = () => {
 
   const stats = [
     { label: "Total Stars", value: loading ? "..." : githubStats.totalStars, icon: FaStar, color: "#F59E0B" },
-    { label: "Total Forks", value: loading ? "..." : githubStats.totalForks, icon: FaCodeBranch, color: "#6366F1" },
-    { label: "Public Repos", value: loading ? "..." : githubStats.publicRepos, icon: FaGithub, color: "#60A5FA" },
-    { label: "Followers", value: loading ? "..." : githubStats.followers, icon: FaCode, color: "#22D3EE" },
+    { label: "Total Forks", value: loading ? "..." : githubStats.totalForks, icon: FaCodeBranch, color: "#6DB33F" },
+    { label: "Public Repos", value: loading ? "..." : githubStats.publicRepos, icon: FaGithub, color: "#34D058" },
+    { label: "Followers", value: loading ? "..." : githubStats.followers, icon: FaCode, color: "#86C26B" },
   ];
 
   const profileInfo = [
@@ -155,6 +168,7 @@ const Stats = () => {
           className="mb-12"
         >
           <div className="flex items-center gap-3 mb-4">
+            <SiSpringboot className="text-4xl text-accent-purple" />
             <h2 className="text-5xl md:text-6xl font-bold bg-gradient-purple-blue bg-clip-text text-transparent">
               Developer Stats
             </h2>

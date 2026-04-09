@@ -19,7 +19,7 @@ const ProjectsNew = () => {
       description: "Responsive React frontend for the Job Portal System. Connects to the Spring Boot backend with job listings, user authentication UI, and application tracking.",
       tech: ["React", "Tailwind CSS", "Axios", "REST API"],
       github: "https://github.com/Akhil-vk18/job-portal-frontend",
-      live: null,
+      live: "https://jobportal.akhilsanthosh.dev/",
       period: "Nov 2025 - Dec 2025",
       tag: "Frontend"
     },
@@ -37,7 +37,7 @@ const ProjectsNew = () => {
       description: "Python project to track personal finances with CSV-based data storage and graph plotting capabilities using pandas and matplotlib.",
       tech: ["Python", "Pandas", "Matplotlib", "Streamlit", "CSV"],
       github: "https://github.com/Akhil-vk18/finance-tracker-",
-      live: null,
+      live: "https://personal-finance-tracker-app.streamlit.app/",
       period: "Feb 2025",
       tag: "Data"
     },
@@ -55,7 +55,7 @@ const ProjectsNew = () => {
       description: "Backend APIs built with Express.js for emission calculations. Integrated Firebase authentication and database services.",
       tech: ["Express.js", "Firebase", "MongoDB", "REST API"],
       github: "https://github.com/Akhil-vk18/carbonfootprint-calculator.git",
-      live: null,
+      live: "https://carbonfootprint-calculator-ed3hjcq5fcvvdh9hevkbdh.streamlit.app/",
       period: "Apr 2024 - May 2024",
       tag: "Backend"
     },
@@ -64,7 +64,7 @@ const ProjectsNew = () => {
       description: "Modern Spring Boot-themed portfolio with glassmorphism design, smooth animations, GitHub stats, and direct contact form integration.",
       tech: ["React", "Tailwind CSS", "Framer Motion"],
       github: "https://github.com/Akhil-vk18/my-portfolio",
-      live: "https://akhil-santhosh.vercel.app",
+      live: "https://www.akhilsanthosh.dev",
       period: "2024 - 2026",
       tag: "Frontend"
     }
