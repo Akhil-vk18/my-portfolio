@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaExternalLinkAlt, FaGithub, FaEye } from 'react-icons/fa';
 import { SiSpringboot } from 'react-icons/si';
 
 const ProjectsNew = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [imgErrors, setImgErrors] = useState({});
 
   // Java projects are listed first, then all others
   const projects = [
@@ -81,6 +82,15 @@ const ProjectsNew = () => {
     Automation: "bg-orange-500/20 text-orange-400 border-orange-500/30",
   };
 
+  // WordPress mshots — reliable free public screenshot service
+  const getPreviewUrl = (url) =>
+    `https://s0.wp.com/mshots/v1/${encodeURIComponent(url)}?w=640&h=400`;
+
+  const activeProject =
+    hoveredIndex !== null && hoveredIndex < projects.length
+      ? projects[hoveredIndex]
+      : null;
+
   return (
     <section id="projects" className="min-h-screen flex items-center justify-center p-8">
       <div className="max-w-6xl w-full">
@@ -116,32 +126,6 @@ const ProjectsNew = () => {
               onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setHoveredIndex(null); }}
               tabIndex={project.live ? 0 : undefined}
             >
-              {/* Floating preview tooltip — appears above the card, does NOT change card height */}
-              {project.live && (
-                <div
-                  className="absolute bottom-full left-0 right-0 mb-2 z-50 pointer-events-none transition-all duration-300"
-                  style={{
-                    opacity: hoveredIndex === index ? 1 : 0,
-                    transform: hoveredIndex === index ? 'translateY(0)' : 'translateY(6px)',
-                  }}
-                >
-                  <div className="rounded-lg overflow-hidden border border-white/20 shadow-2xl">
-                    <img
-                      src={`https://image.thum.io/get/width/600/crop/320/${project.live}`}
-                      alt={`${project.title} preview`}
-                      className="w-full block"
-                      style={{ height: '160px', objectFit: 'cover', objectPosition: 'top' }}
-                      loading="lazy"
-                      decoding="async"
-                    />
-                    <div className="bg-dark-card/90 backdrop-blur-sm px-3 py-1.5 flex items-center justify-between">
-                      <span className="text-xs text-gray-400">Live Preview</span>
-                      <span className="text-xs text-accent-purple">{project.live}</span>
-                    </div>
-                  </div>
-                </div>
-              )}
-
               {/* Header row */}
               <div className="flex items-center justify-between mb-3">
                 <p className="text-xs text-gray-500 font-mono uppercase tracking-wider">{project.period}</p>
@@ -201,6 +185,55 @@ const ProjectsNew = () => {
           ))}
         </div>
       </div>
+
+      {/* Fixed-position preview panel — rendered outside the grid so overflow-hidden never clips it */}
+      <AnimatePresence>
+        {activeProject?.live && (
+          <motion.div
+            key={hoveredIndex}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            transition={{ duration: 0.2 }}
+            className="fixed bottom-8 right-8 z-50 w-72 rounded-xl overflow-hidden border border-white/20 shadow-2xl pointer-events-none"
+            style={{ background: 'rgba(15,15,25,0.95)', backdropFilter: 'blur(12px)' }}
+          >
+            {/* Header bar */}
+            <div className="flex items-center gap-2 px-3 py-2 border-b border-white/10">
+              <FaEye className="text-accent-purple text-xs shrink-0" />
+              <span className="text-xs font-medium text-gray-200 truncate">{activeProject.title}</span>
+              <span className="text-xs text-accent-purple ml-auto shrink-0">Live Preview</span>
+            </div>
+
+            {/* Screenshot */}
+            {imgErrors[hoveredIndex] ? (
+              <div className="flex flex-col items-center justify-center h-36 gap-2 text-gray-500">
+                <FaExternalLinkAlt className="text-lg" />
+                <span className="text-xs">Preview unavailable</span>
+              </div>
+            ) : (
+              <img
+                src={getPreviewUrl(activeProject.live)}
+                alt={`${activeProject.title} preview`}
+                className="w-full block"
+                style={{ height: '144px', objectFit: 'cover', objectPosition: 'top' }}
+                loading="lazy"
+                decoding="async"
+                data-idx={hoveredIndex}
+                onError={(e) => {
+                  const idx = Number(e.currentTarget.dataset.idx);
+                  setImgErrors(prev => ({ ...prev, [idx]: true }));
+                }}
+              />
+            )}
+
+            {/* Footer URL */}
+            <div className="px-3 py-1.5">
+              <span className="text-xs text-gray-500 truncate block">{activeProject.live}</span>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
