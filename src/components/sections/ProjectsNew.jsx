@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
 import { SiSpringboot } from 'react-icons/si';
 
 const ProjectsNew = () => {
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+
+  // Java projects are listed first, then all others
   const projects = [
     {
       title: "Job Portal Backend",
@@ -15,15 +18,6 @@ const ProjectsNew = () => {
       tag: "Backend"
     },
     {
-      title: "Job Portal Frontend",
-      description: "Responsive React frontend for the Job Portal System. Connects to the Spring Boot backend with job listings, user authentication UI, and application tracking.",
-      tech: ["React", "Tailwind CSS", "Axios", "REST API"],
-      github: "https://github.com/Akhil-vk18/job-portal-frontend",
-      live: "https://jobportal.akhilsanthosh.dev/",
-      period: "Nov 2025 - Dec 2025",
-      tag: "Frontend"
-    },
-    {
       title: "Job Portal Scraper",
       description: "Spring Boot-based web scraper that extracts job listings from Infopark job portal using Jsoup. Stores structured job data (title, company, requirements, deadlines) into MySQL via Spring Data JPA — acts as a data feed for the Job Portal backend.",
       tech: ["Java", "Spring Boot", "Jsoup", "MySQL", "Spring Data JPA", "Maven"],
@@ -31,6 +25,15 @@ const ProjectsNew = () => {
       live: null,
       period: "Sep 2025",
       tag: "Backend"
+    },
+    {
+      title: "Job Portal Frontend",
+      description: "Responsive React frontend for the Job Portal System. Connects to the Spring Boot backend with job listings, user authentication UI, and application tracking.",
+      tech: ["React", "Tailwind CSS", "Axios", "REST API"],
+      github: "https://github.com/Akhil-vk18/job-portal-frontend",
+      live: "https://jobportal.akhilsanthosh.dev/",
+      period: "Nov 2025 - Dec 2025",
+      tag: "Frontend"
     },
     {
       title: "Finance Tracker",
@@ -106,62 +109,89 @@ const ProjectsNew = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.08 }}
-              className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 hover:border-accent-purple/40 transition-all duration-300 group flex flex-col"
+              className="bg-white/5 backdrop-blur-sm rounded-lg border border-white/10 hover:border-accent-purple/40 transition-all duration-300 group flex flex-col overflow-hidden"
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
             >
-              {/* Header row */}
-              <div className="flex items-center justify-between mb-3">
-                <p className="text-xs text-gray-500 font-mono uppercase tracking-wider">{project.period}</p>
-                {project.tag && (
-                  <span className={`text-xs px-2 py-0.5 rounded-full border font-medium ${tagColors[project.tag] || 'bg-white/10 text-gray-400 border-white/20'}`}>
-                    {project.tag}
-                  </span>
-                )}
-              </div>
-              
-              {/* Title */}
-              <h3 className="text-lg font-bold text-white mb-3 group-hover:text-accent-purple transition-colors">
-                {project.title}
-              </h3>
-              
-              {/* Description */}
-              <p className="text-gray-400 text-sm mb-4 leading-relaxed flex-1">
-                {project.description}
-              </p>
-              
-              {/* Tech Stack */}
-              <div className="flex flex-wrap gap-2 mb-4">
-                {project.tech.map((tech, i) => (
-                  <span
-                    key={i}
-                    className="text-xs px-2 py-1 bg-accent-purple/10 rounded text-accent-purple border border-accent-purple/20"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-              
-              {/* Links */}
-              <div className="flex gap-4 mt-auto">
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-xs text-gray-400 hover:text-white transition-colors"
+              {/* Live preview — slides in from top on hover for deployed projects */}
+              {project.live && (
+                <div
+                  className="transition-all duration-500 ease-in-out overflow-hidden"
+                  style={{ maxHeight: hoveredIndex === index ? '160px' : '0px' }}
                 >
-                  <FaGithub />
-                  View Code
-                </a>
-                {project.live && (
+                  <div className="relative">
+                    <img
+                      src={`https://image.thum.io/get/width/600/crop/320/${project.live}`}
+                      alt={`${project.title} preview`}
+                      className="w-full object-cover object-top"
+                      style={{ height: '160px' }}
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-dark-bg/60 pointer-events-none" />
+                    <span className="absolute bottom-2 right-3 text-xs text-white/70 bg-black/50 px-2 py-0.5 rounded-full backdrop-blur-sm">
+                      Live Preview
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {/* Card body */}
+              <div className="p-6 flex flex-col flex-1">
+                {/* Header row */}
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-xs text-gray-500 font-mono uppercase tracking-wider">{project.period}</p>
+                  {project.tag && (
+                    <span className={`text-xs px-2 py-0.5 rounded-full border font-medium ${tagColors[project.tag] || 'bg-white/10 text-gray-400 border-white/20'}`}>
+                      {project.tag}
+                    </span>
+                  )}
+                </div>
+
+                {/* Title */}
+                <h3 className="text-lg font-bold text-white mb-3 group-hover:text-accent-purple transition-colors">
+                  {project.title}
+                </h3>
+
+                {/* Description */}
+                <p className="text-gray-400 text-sm mb-4 leading-relaxed flex-1">
+                  {project.description}
+                </p>
+
+                {/* Tech Stack */}
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {project.tech.map((tech, i) => (
+                    <span
+                      key={i}
+                      className="text-xs px-2 py-1 bg-accent-purple/10 rounded text-accent-purple border border-accent-purple/20"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Links */}
+                <div className="flex gap-4 mt-auto">
                   <a
-                    href={project.live}
+                    href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-xs text-accent-purple hover:text-accent-blue transition-colors font-medium"
+                    className="flex items-center gap-2 text-xs text-gray-400 hover:text-white transition-colors"
                   >
-                    <FaExternalLinkAlt />
-                    Live Demo
+                    <FaGithub />
+                    View Code
                   </a>
-                )}
+                  {project.live && (
+                    <a
+                      href={project.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-xs text-accent-purple hover:text-accent-blue transition-colors font-medium"
+                    >
+                      <FaExternalLinkAlt />
+                      Live Demo
+                    </a>
+                  )}
+                </div>
               </div>
             </motion.div>
           ))}
