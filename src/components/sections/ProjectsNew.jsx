@@ -125,6 +125,8 @@ const ProjectsNew = () => {
               onFocus={() => setHoveredIndex(index)}
               onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setHoveredIndex(null); }}
               tabIndex={project.live ? 0 : undefined}
+              role={project.live ? "group" : undefined}
+              aria-label={project.live ? `${project.title} — hover or focus to preview live site` : undefined}
             >
               {/* Header row */}
               <div className="flex items-center justify-between mb-3">
