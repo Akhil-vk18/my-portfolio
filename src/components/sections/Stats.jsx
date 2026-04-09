@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaGithub, FaMapMarkerAlt, FaBriefcase, FaStar, FaCodeBranch } from 'react-icons/fa';
+import { FaGithub, FaMapMarkerAlt, FaBriefcase, FaStar, FaCodeBranch, FaCode } from 'react-icons/fa';
+import { SiSpringboot } from 'react-icons/si';
 
 const Stats = () => {
   // GitHub username configuration
@@ -16,8 +17,8 @@ const Stats = () => {
   const [contributions, setContributions] = useState([]);
   const [contributionsLoading, setContributionsLoading] = useState(true);
 
-  // GitHub contribution colors
-  const CONTRIBUTION_COLORS = ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'];
+  // GitHub contribution colors — Spring Boot green palette
+  const CONTRIBUTION_COLORS = ['#0E1A0F', '#1a3a1c', '#2d6b30', '#4e9e52', '#6DB33F'];
   
   // Grid dimensions
   const CELL_SIZE = 10; // px
@@ -64,18 +65,30 @@ const Stats = () => {
   useEffect(() => {
     const fetchContributions = async () => {
       try {
-        // Using GitHub's contribution calendar API via a proxy service
-        const response = await fetch(`https://github-contributions-api.jogruber.de/v4/${GITHUB_USERNAME}?y=last`);
-        
-        if (!response.ok) {
-          throw new Error(`Failed to fetch contributions: ${response.status}`);
+        const currentYear = new Date().getFullYear();
+        const prevYear = currentYear - 1;
+
+        // Fetch both current and previous year in parallel so the heatmap
+        // covers the full last-52-weeks window regardless of year boundary
+        const [resCurrent, resPrev] = await Promise.all([
+          fetch(`https://github-contributions-api.jogruber.de/v4/${GITHUB_USERNAME}?y=${currentYear}`),
+          fetch(`https://github-contributions-api.jogruber.de/v4/${GITHUB_USERNAME}?y=${prevYear}`),
+        ]);
+
+        const merged = [];
+
+        if (resPrev.ok) {
+          const dataPrev = await resPrev.json();
+          if (dataPrev.contributions) merged.push(...dataPrev.contributions);
         }
-        
-        const data = await response.json();
-        
-        // Convert the data to our format
-        if (data.contributions) {
-          setContributions(data.contributions);
+
+        if (resCurrent.ok) {
+          const dataCurrent = await resCurrent.json();
+          if (dataCurrent.contributions) merged.push(...dataCurrent.contributions);
+        }
+
+        if (merged.length > 0) {
+          setContributions(merged);
         }
         setContributionsLoading(false);
       } catch (error) {
@@ -124,7 +137,7 @@ const Stats = () => {
     
     // Map count to intensity level (0-4)
     let intensity = 0;
-    if (count <= 3) intensity = 1;
+    if (count > 0 && count <= 3) intensity = 1;
     else if (count <= 6) intensity = 2;
     else if (count <= 9) intensity = 3;
     else if (count > 9) intensity = 4;
@@ -134,9 +147,9 @@ const Stats = () => {
 
   const stats = [
     { label: "Total Stars", value: loading ? "..." : githubStats.totalStars, icon: FaStar, color: "#F59E0B" },
-    { label: "Total Forks", value: loading ? "..." : githubStats.totalForks, icon: FaCodeBranch, color: "#10B981" },
-    { label: "Public Repos", value: loading ? "..." : githubStats.publicRepos, icon: FaGithub, color: "#3B82F6" },
-    { label: "Followers", value: loading ? "..." : githubStats.followers, icon: FaGithub, color: "#8B5CF6" },
+    { label: "Total Forks", value: loading ? "..." : githubStats.totalForks, icon: FaCodeBranch, color: "#6DB33F" },
+    { label: "Public Repos", value: loading ? "..." : githubStats.publicRepos, icon: FaGithub, color: "#34D058" },
+    { label: "Followers", value: loading ? "..." : githubStats.followers, icon: FaCode, color: "#86C26B" },
   ];
 
   const profileInfo = [
@@ -154,11 +167,14 @@ const Stats = () => {
           animate={{ opacity: 1, y: 0 }}
           className="mb-12"
         >
-          <h2 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-purple-blue bg-clip-text text-transparent">
-            Developer Stats
-          </h2>
+          <div className="flex items-center gap-3 mb-4">
+            <SiSpringboot className="text-4xl text-accent-purple" />
+            <h2 className="text-5xl md:text-6xl font-bold bg-gradient-purple-blue bg-clip-text text-transparent">
+              Developer Stats
+            </h2>
+          </div>
           <p className="text-xl text-gray-400 font-mono">
-            {"// Analytics dashboard"}
+            {"// GitHub analytics dashboard"}
           </p>
         </motion.div>
 

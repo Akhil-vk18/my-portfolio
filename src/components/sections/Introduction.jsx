@@ -1,8 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaDownload, FaEnvelope, FaGithub, FaLinkedin } from 'react-icons/fa';
+import { FaDownload, FaEnvelope, FaGithub, FaLinkedin, FaQuoteLeft } from 'react-icons/fa';
+import { SiSpringboot } from 'react-icons/si';
+
+const fallbackQuotes = [
+  { text: "Code is like humor. When you have to explain it, it's bad.", author: "Cory House" },
+  { text: "Make it work, make it right, make it fast.", author: "Kent Beck" },
+  { text: "Any fool can write code that a computer can understand. Good programmers write code that humans can understand.", author: "Martin Fowler" },
+  { text: "First, solve the problem. Then, write the code.", author: "John Johnson" },
+  { text: "Simplicity is the soul of efficiency.", author: "Austin Freeman" },
+  { text: "Before software can be reusable it first has to be usable.", author: "Ralph Johnson" },
+];
 
 const Introduction = () => {
+  const [quote, setQuote] = useState(null);
+
+  useEffect(() => {
+    fetch('https://thequoteshub.com/api/tags/computers')
+      .then((res) => res.json())
+      .then((data) => {
+        const quotes = data.quotes;
+        if (quotes && quotes.length > 0) {
+          setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
+        } else {
+          setQuote(fallbackQuotes[Math.floor(Math.random() * fallbackQuotes.length)]);
+        }
+      })
+      .catch(() => {
+        setQuote(fallbackQuotes[Math.floor(Math.random() * fallbackQuotes.length)]);
+      });
+  }, []);
+
   return (
     <section id="introduction" className="min-h-screen flex items-center justify-center p-8">
       <motion.div
@@ -11,6 +39,17 @@ const Introduction = () => {
         transition={{ duration: 0.6 }}
         className="max-w-4xl w-full"
       >
+        {/* Spring Boot badge */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.1 }}
+          className="flex items-center gap-2 mb-4"
+        >
+          <SiSpringboot className="text-accent-purple text-xl" />
+          <span className="text-sm text-accent-purple font-mono uppercase tracking-widest">Spring Boot Developer</span>
+        </motion.div>
+
         {/* Name Heading */}
         <motion.h1
           initial={{ opacity: 0, scale: 0.9 }}
@@ -36,12 +75,28 @@ const Introduction = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="text-lg text-gray-300 mb-8 leading-relaxed max-w-2xl"
+          className="text-lg text-gray-300 mb-6 leading-relaxed max-w-2xl"
         >
           Java Backend Developer specializing in building scalable applications with Spring Boot. 
           Passionate about clean code, API design, and solving complex backend challenges. 
           Currently exploring cloud technologies and microservices architecture.
         </motion.p>
+
+        {/* Developer Quote — shown between bio and CTAs */}
+        {quote && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.75 }}
+            className="max-w-2xl bg-accent-purple/5 border-l-4 border-accent-purple/50 rounded-r-lg px-5 py-4 mb-8"
+          >
+            <FaQuoteLeft className="text-accent-purple text-base mb-2 opacity-60" />
+            <p className="text-gray-300 text-sm italic leading-relaxed mb-2">
+              {quote.text}
+            </p>
+            <p className="text-accent-purple text-xs font-mono">— {quote.author}</p>
+          </motion.div>
+        )}
 
         {/* CTA Buttons */}
         <motion.div
