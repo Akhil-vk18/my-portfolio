@@ -8,14 +8,14 @@ module.exports = {
     extend: {
       colors: {
         dark: {
-          bg: '#0B0F17',
-          card: '#151B28',
-          border: '#1F2937',
+          bg: '#080F09',
+          card: '#0E1A0F',
+          border: '#1A2E1C',
         },
         accent: {
-          purple: '#8B5CF6',
-          blue: '#3B82F6',
-          cyan: '#06B6D4',
+          purple: '#6DB33F',
+          blue: '#34D058',
+          cyan: '#86C26B',
         }
       },
       fontFamily: {
@@ -23,11 +23,11 @@ module.exports = {
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-purple-blue': 'linear-gradient(135deg, #8B5CF6 0%, #3B82F6 100%)',
+        'gradient-purple-blue': 'linear-gradient(135deg, #4e8c2b 0%, #6DB33F 100%)',
       },
       boxShadow: {
-        'glow': '0 0 20px rgba(139, 92, 246, 0.3)',
-        'glow-blue': '0 0 20px rgba(59, 130, 246, 0.3)',
+        'glow': '0 0 20px rgba(109, 179, 63, 0.4)',
+        'glow-blue': '0 0 20px rgba(52, 208, 88, 0.3)',
       }
     },
   },
