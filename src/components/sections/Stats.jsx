@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaGithub, FaMapMarkerAlt, FaBriefcase, FaStar, FaCodeBranch, FaCode } from 'react-icons/fa';
-import { SiSpringboot } from 'react-icons/si';
 
 const Stats = () => {
   // GitHub username configuration
@@ -17,8 +16,8 @@ const Stats = () => {
   const [contributions, setContributions] = useState([]);
   const [contributionsLoading, setContributionsLoading] = useState(true);
 
-  // GitHub contribution colors — Spring Boot green palette
-  const CONTRIBUTION_COLORS = ['#0E1A0F', '#1a3a1c', '#2d6b30', '#4e9e52', '#6DB33F'];
+  // GitHub contribution colors — purple/indigo palette
+  const CONTRIBUTION_COLORS = ['#0D0D1A', '#1a1a3a', '#2d2d7a', '#4e4ecc', '#6366F1'];
   
   // Grid dimensions
   const CELL_SIZE = 10; // px
@@ -125,7 +124,7 @@ const Stats = () => {
     
     // Map count to intensity level (0-4)
     let intensity = 0;
-    if (count <= 3) intensity = 1;
+    if (count > 0 && count <= 3) intensity = 1;
     else if (count <= 6) intensity = 2;
     else if (count <= 9) intensity = 3;
     else if (count > 9) intensity = 4;
@@ -135,9 +134,9 @@ const Stats = () => {
 
   const stats = [
     { label: "Total Stars", value: loading ? "..." : githubStats.totalStars, icon: FaStar, color: "#F59E0B" },
-    { label: "Total Forks", value: loading ? "..." : githubStats.totalForks, icon: FaCodeBranch, color: "#6DB33F" },
-    { label: "Public Repos", value: loading ? "..." : githubStats.publicRepos, icon: FaGithub, color: "#34D058" },
-    { label: "Followers", value: loading ? "..." : githubStats.followers, icon: FaCode, color: "#86C26B" },
+    { label: "Total Forks", value: loading ? "..." : githubStats.totalForks, icon: FaCodeBranch, color: "#6366F1" },
+    { label: "Public Repos", value: loading ? "..." : githubStats.publicRepos, icon: FaGithub, color: "#60A5FA" },
+    { label: "Followers", value: loading ? "..." : githubStats.followers, icon: FaCode, color: "#22D3EE" },
   ];
 
   const profileInfo = [
@@ -156,7 +155,6 @@ const Stats = () => {
           className="mb-12"
         >
           <div className="flex items-center gap-3 mb-4">
-            <SiSpringboot className="text-4xl text-accent-purple" />
             <h2 className="text-5xl md:text-6xl font-bold bg-gradient-purple-blue bg-clip-text text-transparent">
               Developer Stats
             </h2>

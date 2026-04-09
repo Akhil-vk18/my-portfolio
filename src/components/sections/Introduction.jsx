@@ -75,12 +75,28 @@ const Introduction = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="text-lg text-gray-300 mb-8 leading-relaxed max-w-2xl"
+          className="text-lg text-gray-300 mb-6 leading-relaxed max-w-2xl"
         >
           Java Backend Developer specializing in building scalable applications with Spring Boot. 
           Passionate about clean code, API design, and solving complex backend challenges. 
           Currently exploring cloud technologies and microservices architecture.
         </motion.p>
+
+        {/* Developer Quote — shown between bio and CTAs */}
+        {quote && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.75 }}
+            className="max-w-2xl bg-accent-purple/5 border-l-4 border-accent-purple/50 rounded-r-lg px-5 py-4 mb-8"
+          >
+            <FaQuoteLeft className="text-accent-purple text-base mb-2 opacity-60" />
+            <p className="text-gray-300 text-sm italic leading-relaxed mb-2">
+              {quote.text}
+            </p>
+            <p className="text-accent-purple text-xs font-mono">— {quote.author}</p>
+          </motion.div>
+        )}
 
         {/* CTA Buttons */}
         <motion.div
@@ -111,7 +127,7 @@ const Introduction = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
-          className="flex gap-4 mb-10"
+          className="flex gap-4"
         >
           <a
             href="https://github.com/Akhil-vk18"
@@ -130,22 +146,6 @@ const Introduction = () => {
             <FaLinkedin size={24} />
           </a>
         </motion.div>
-
-        {/* Developer Quote */}
-        {quote && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2 }}
-            className="max-w-2xl bg-accent-purple/5 border border-accent-purple/20 rounded-lg p-5"
-          >
-            <FaQuoteLeft className="text-accent-purple text-lg mb-2 opacity-60" />
-            <p className="text-gray-300 text-sm italic leading-relaxed mb-2">
-              {quote.text}
-            </p>
-            <p className="text-accent-purple text-xs font-mono">— {quote.author}</p>
-          </motion.div>
-        )}
       </motion.div>
     </section>
   );
