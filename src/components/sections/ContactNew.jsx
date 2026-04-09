@@ -5,8 +5,8 @@ import { SiSpringboot } from 'react-icons/si';
 
 // To enable direct email sending:
 // 1. Go to https://web3forms.com and enter your email to get a free access key
-// 2. Replace the value below with your access key
-const WEB3FORMS_ACCESS_KEY = 'YOUR_WEB3FORMS_ACCESS_KEY';
+// 2. Add REACT_APP_WEB3FORMS_KEY=your_access_key to your .env file (or Vercel env vars)
+const WEB3FORMS_ACCESS_KEY = process.env.REACT_APP_WEB3FORMS_KEY || 'YOUR_WEB3FORMS_ACCESS_KEY';
 
 const ContactNew = () => {
   const [formData, setFormData] = useState({
