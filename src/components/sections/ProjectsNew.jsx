@@ -24,13 +24,13 @@ const ProjectsNew = () => {
       tag: "Frontend"
     },
     {
-      title: "Web Scraper",
-      description: "Python-based web scraper that extracts structured data from websites using BeautifulSoup and Selenium. Supports dynamic content, pagination, and CSV/JSON export.",
-      tech: ["Python", "BeautifulSoup", "Selenium", "CSV", "JSON"],
-      github: "https://github.com/Akhil-vk18/web-scraper",
+      title: "Job Portal Scraper",
+      description: "Spring Boot-based web scraper that extracts job listings from Infopark job portal using Jsoup. Stores structured job data (title, company, requirements, deadlines) into MySQL via Spring Data JPA — acts as a data feed for the Job Portal backend.",
+      tech: ["Java", "Spring Boot", "Jsoup", "MySQL", "Spring Data JPA", "Maven"],
+      github: "https://github.com/Akhil-vk18/Scrapper-java",
       live: null,
-      period: "2025",
-      tag: "Automation"
+      period: "Sep 2025",
+      tag: "Backend"
     },
     {
       title: "Finance Tracker",
