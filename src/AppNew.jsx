@@ -30,12 +30,12 @@ function AppNew() {
   };
 
   return (
-    <div className="min-h-screen bg-dark-bg text-white">
+    <div className="min-h-screen bg-dark-bg text-white overflow-hidden">
       {/* Sidebar */}
       <Sidebar activeSection={activeSection} onNavigate={handleNavigate} />
 
       {/* Main Content Area */}
-      <main className="lg:ml-72 min-h-screen">
+      <main className="lg:ml-72 min-h-screen overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeSection}
