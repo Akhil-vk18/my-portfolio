@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaPaperPlane, FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
+import { FaPaperPlane } from 'react-icons/fa';
 import { SiSpringboot } from 'react-icons/si';
-
-// To enable direct email sending:
-// 1. Go to https://web3forms.com and enter your email to get a free access key
-// 2. Add REACT_APP_WEB3FORMS_KEY=your_access_key to your .env file (or Vercel env vars)
-const WEB3FORMS_ACCESS_KEY = process.env.REACT_APP_WEB3FORMS_KEY || 'YOUR_WEB3FORMS_ACCESS_KEY';
 
 const ContactNew = () => {
   const [formData, setFormData] = useState({
@@ -14,7 +9,6 @@ const ContactNew = () => {
     email: '',
     message: ''
   });
-  const [status, setStatus] = useState('idle'); // 'idle' | 'loading' | 'success' | 'error'
 
   const handleChange = (e) => {
     setFormData({
@@ -23,38 +17,16 @@ const ContactNew = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setStatus('loading');
-
-    try {
-      const response = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({
-          access_key: WEB3FORMS_ACCESS_KEY,
-          name: formData.name,
-          email: formData.email,
-          message: formData.message,
-          subject: `Portfolio contact from ${formData.name}`,
-        }),
-      });
-
-      const result = await response.json();
-      if (result.success) {
-        setStatus('success');
-        setFormData({ name: '', email: '', message: '' });
-      } else {
-        setStatus('error');
-      }
-    } catch {
-      setStatus('error');
-    }
+    const subject = encodeURIComponent(`Message from ${formData.name}`);
+    const body = `From: ${formData.name} <${formData.email}>\n\n${formData.message}`;
+    const mailtoLink = `mailto:connectwithakhilsanthosh@gmail.com?subject=${subject}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailtoLink;
   };
 
   const handleReset = () => {
     setFormData({ name: '', email: '', message: '' });
-    setStatus('idle');
   };
 
   return (
@@ -77,30 +49,6 @@ const ContactNew = () => {
           </p>
         </motion.div>
 
-        {/* Success message */}
-        {status === 'success' && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex items-center gap-3 p-4 mb-6 bg-accent-purple/10 border border-accent-purple/30 rounded-lg text-accent-purple"
-          >
-            <FaCheckCircle className="text-xl shrink-0" />
-            <p className="text-sm font-medium">Message sent! I'll get back to you within 24 hours.</p>
-          </motion.div>
-        )}
-
-        {/* Error message */}
-        {status === 'error' && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex items-center gap-3 p-4 mb-6 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400"
-          >
-            <FaExclamationCircle className="text-xl shrink-0" />
-            <p className="text-sm font-medium">Failed to send. Please try again or email directly at <a href="mailto:connectwithakhilsanthosh@gmail.com" className="underline">connectwithakhilsanthosh@gmail.com</a></p>
-          </motion.div>
-        )}
-
         {/* Contact Form */}
         <motion.form
           initial={{ opacity: 0, y: 20 }}
@@ -121,8 +69,7 @@ const ContactNew = () => {
               value={formData.name}
               onChange={handleChange}
               required
-              disabled={status === 'loading'}
-              className="w-full px-4 py-3 bg-dark-card border border-dark-border rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-purple transition-all disabled:opacity-60"
+              className="w-full px-4 py-3 bg-dark-card border border-dark-border rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-purple transition-all"
               placeholder="Your name"
             />
           </div>
@@ -139,8 +86,7 @@ const ContactNew = () => {
               value={formData.email}
               onChange={handleChange}
               required
-              disabled={status === 'loading'}
-              className="w-full px-4 py-3 bg-dark-card border border-dark-border rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-purple transition-all disabled:opacity-60"
+              className="w-full px-4 py-3 bg-dark-card border border-dark-border rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-purple transition-all"
               placeholder="your.email@example.com"
             />
             <p className="text-xs text-gray-500 mt-1">I'll get back to you within 24 hours</p>
@@ -158,8 +104,7 @@ const ContactNew = () => {
               onChange={handleChange}
               required
               rows="5"
-              disabled={status === 'loading'}
-              className="w-full px-4 py-3 bg-dark-card border border-dark-border rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-purple transition-all resize-none disabled:opacity-60"
+              className="w-full px-4 py-3 bg-dark-card border border-dark-border rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-purple transition-all resize-none"
               placeholder="Your message here..."
             ></textarea>
           </div>
@@ -168,17 +113,15 @@ const ContactNew = () => {
           <div className="flex gap-4">
             <button
               type="submit"
-              disabled={status === 'loading'}
-              className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gradient-purple-blue text-white rounded-lg font-medium hover:shadow-glow transition-all duration-300 hover:scale-105 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
+              className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gradient-purple-blue text-white rounded-lg font-medium hover:shadow-glow transition-all duration-300 hover:scale-105"
             >
-              <FaPaperPlane className={status === 'loading' ? 'animate-pulse' : ''} />
-              {status === 'loading' ? 'Sending...' : 'Send Message'}
+              <FaPaperPlane />
+              Send Message
             </button>
             <button
               type="button"
               onClick={handleReset}
-              disabled={status === 'loading'}
-              className="px-6 py-3 glass-effect text-white rounded-lg font-medium hover:bg-white/10 transition-all duration-300 disabled:opacity-60"
+              className="px-6 py-3 glass-effect text-white rounded-lg font-medium hover:bg-white/10 transition-all duration-300"
             >
               Reset
             </button>
@@ -190,3 +133,4 @@ const ContactNew = () => {
 };
 
 export default ContactNew;
+

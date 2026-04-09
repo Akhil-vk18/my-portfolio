@@ -1,9 +1,13 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaExternalLinkAlt, FaGithub, FaEye } from 'react-icons/fa';
 import { SiSpringboot } from 'react-icons/si';
 
 const ProjectsNew = () => {
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [imgErrors, setImgErrors] = useState({});
+
+  // Java projects are listed first, then all others
   const projects = [
     {
       title: "Job Portal Backend",
@@ -15,15 +19,6 @@ const ProjectsNew = () => {
       tag: "Backend"
     },
     {
-      title: "Job Portal Frontend",
-      description: "Responsive React frontend for the Job Portal System. Connects to the Spring Boot backend with job listings, user authentication UI, and application tracking.",
-      tech: ["React", "Tailwind CSS", "Axios", "REST API"],
-      github: "https://github.com/Akhil-vk18/job-portal-frontend",
-      live: "https://jobportal.akhilsanthosh.dev/",
-      period: "Nov 2025 - Dec 2025",
-      tag: "Frontend"
-    },
-    {
       title: "Job Portal Scraper",
       description: "Spring Boot-based web scraper that extracts job listings from Infopark job portal using Jsoup. Stores structured job data (title, company, requirements, deadlines) into MySQL via Spring Data JPA — acts as a data feed for the Job Portal backend.",
       tech: ["Java", "Spring Boot", "Jsoup", "MySQL", "Spring Data JPA", "Maven"],
@@ -31,6 +26,15 @@ const ProjectsNew = () => {
       live: null,
       period: "Sep 2025",
       tag: "Backend"
+    },
+    {
+      title: "Job Portal Frontend",
+      description: "Responsive React frontend for the Job Portal System. Connects to the Spring Boot backend with job listings, user authentication UI, and application tracking.",
+      tech: ["React", "Tailwind CSS", "Axios", "REST API"],
+      github: "https://github.com/Akhil-vk18/job-portal-frontend",
+      live: "https://jobportal.akhilsanthosh.dev/",
+      period: "Nov 2025 - Dec 2025",
+      tag: "Frontend"
     },
     {
       title: "Finance Tracker",
@@ -78,6 +82,15 @@ const ProjectsNew = () => {
     Automation: "bg-orange-500/20 text-orange-400 border-orange-500/30",
   };
 
+  // WordPress mshots — reliable free public screenshot service
+  const getPreviewUrl = (url) =>
+    `https://s0.wp.com/mshots/v1/${encodeURIComponent(url)}?w=640&h=400`;
+
+  const activeProject =
+    hoveredIndex !== null && hoveredIndex < projects.length
+      ? projects[hoveredIndex]
+      : null;
+
   return (
     <section id="projects" className="min-h-screen flex items-center justify-center p-8">
       <div className="max-w-6xl w-full">
@@ -106,7 +119,14 @@ const ProjectsNew = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.08 }}
-              className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 hover:border-accent-purple/40 transition-all duration-300 group flex flex-col"
+              className="relative bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 hover:border-accent-purple/40 transition-all duration-300 group flex flex-col"
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
+              onFocus={() => setHoveredIndex(index)}
+              onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setHoveredIndex(null); }}
+              tabIndex={project.live ? 0 : undefined}
+              role={project.live ? "group" : undefined}
+              aria-label={project.live ? `${project.title} — hover or focus to preview live site` : undefined}
             >
               {/* Header row */}
               <div className="flex items-center justify-between mb-3">
@@ -117,17 +137,17 @@ const ProjectsNew = () => {
                   </span>
                 )}
               </div>
-              
+
               {/* Title */}
               <h3 className="text-lg font-bold text-white mb-3 group-hover:text-accent-purple transition-colors">
                 {project.title}
               </h3>
-              
+
               {/* Description */}
               <p className="text-gray-400 text-sm mb-4 leading-relaxed flex-1">
                 {project.description}
               </p>
-              
+
               {/* Tech Stack */}
               <div className="flex flex-wrap gap-2 mb-4">
                 {project.tech.map((tech, i) => (
@@ -139,7 +159,7 @@ const ProjectsNew = () => {
                   </span>
                 ))}
               </div>
-              
+
               {/* Links */}
               <div className="flex gap-4 mt-auto">
                 <a
@@ -167,6 +187,55 @@ const ProjectsNew = () => {
           ))}
         </div>
       </div>
+
+      {/* Fixed-position preview panel — rendered outside the grid so overflow-hidden never clips it */}
+      <AnimatePresence>
+        {activeProject?.live && (
+          <motion.div
+            key={hoveredIndex}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            transition={{ duration: 0.2 }}
+            className="fixed bottom-8 right-8 z-50 w-72 rounded-xl overflow-hidden border border-white/20 shadow-2xl pointer-events-none"
+            style={{ background: 'rgba(15,15,25,0.95)', backdropFilter: 'blur(12px)' }}
+          >
+            {/* Header bar */}
+            <div className="flex items-center gap-2 px-3 py-2 border-b border-white/10">
+              <FaEye className="text-accent-purple text-xs shrink-0" />
+              <span className="text-xs font-medium text-gray-200 truncate">{activeProject.title}</span>
+              <span className="text-xs text-accent-purple ml-auto shrink-0">Live Preview</span>
+            </div>
+
+            {/* Screenshot */}
+            {imgErrors[hoveredIndex] ? (
+              <div className="flex flex-col items-center justify-center h-36 gap-2 text-gray-500">
+                <FaExternalLinkAlt className="text-lg" />
+                <span className="text-xs">Preview unavailable</span>
+              </div>
+            ) : (
+              <img
+                src={getPreviewUrl(activeProject.live)}
+                alt={`${activeProject.title} preview`}
+                className="w-full block"
+                style={{ height: '144px', objectFit: 'cover', objectPosition: 'top' }}
+                loading="lazy"
+                decoding="async"
+                data-idx={hoveredIndex}
+                onError={(e) => {
+                  const idx = Number(e.currentTarget.dataset.idx);
+                  setImgErrors(prev => ({ ...prev, [idx]: true }));
+                }}
+              />
+            )}
+
+            {/* Footer URL */}
+            <div className="px-3 py-1.5">
+              <span className="text-xs text-gray-500 truncate block">{activeProject.live}</span>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
