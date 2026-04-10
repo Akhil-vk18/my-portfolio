@@ -12,12 +12,17 @@ import Stats from './components/sections/Stats';
 import SplashScreen from './components/SplashScreen';
 import { Analytics } from '@vercel/analytics/react';
 
+const safeStorage = {
+  getItem: (key) => { try { return sessionStorage.getItem(key); } catch { return null; } },
+  setItem: (key, val) => { try { sessionStorage.setItem(key, val); } catch {} },
+};
+
 function AppNew() {
   // Show splash only once per browser session
-  const [showSplash, setShowSplash] = useState(() => !sessionStorage.getItem('splashShown'));
+  const [showSplash, setShowSplash] = useState(() => !safeStorage.getItem('splashShown'));
 
   const handleSplashComplete = () => {
-    sessionStorage.setItem('splashShown', '1');
+    safeStorage.setItem('splashShown', '1');
     setShowSplash(false);
   };
   const [activeSection, setActiveSection] = useState('introduction');

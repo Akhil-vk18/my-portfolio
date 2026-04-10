@@ -1,41 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaQuoteLeft } from 'react-icons/fa';
-
-const fallbackQuotes = [
-  { text: "Code is like humor. When you have to explain it, it's bad.", author: "Cory House" },
-  { text: "Make it work, make it right, make it fast.", author: "Kent Beck" },
-  { text: "Any fool can write code that a computer can understand. Good programmers write code that humans can understand.", author: "Martin Fowler" },
-  { text: "First, solve the problem. Then, write the code.", author: "John Johnson" },
-  { text: "Simplicity is the soul of efficiency.", author: "Austin Freeman" },
-  { text: "Before software can be reusable it first has to be usable.", author: "Ralph Johnson" },
-];
+import useRandomQuote from '../hooks/useRandomQuote';
 
 const SplashScreen = ({ onComplete }) => {
-  const [quote, setQuote] = useState(null);
+  const { quote, isLoading } = useRandomQuote();
   const [phase, setPhase] = useState('loading'); // 'loading' | 'showing' | 'exiting'
 
-  // Fetch quote on mount
+  // Transition to 'showing' once the quote is ready
   useEffect(() => {
-    fetch('https://thequoteshub.com/api/tags/computers')
-      .then((res) => {
-        if (!res.ok) throw new Error('Failed to fetch');
-        return res.json();
-      })
-      .then((data) => {
-        const quotes = data.quotes;
-        const picked =
-          quotes && quotes.length > 0
-            ? quotes[Math.floor(Math.random() * quotes.length)]
-            : fallbackQuotes[Math.floor(Math.random() * fallbackQuotes.length)];
-        setQuote(picked);
-        setPhase('showing');
-      })
-      .catch(() => {
-        setQuote(fallbackQuotes[Math.floor(Math.random() * fallbackQuotes.length)]);
-        setPhase('showing');
-      });
-  }, []);
+    if (!isLoading && quote && phase === 'loading') {
+      setPhase('showing');
+    }
+  }, [isLoading, quote, phase]);
 
   // Auto-advance after enough time for the quote animation + reading buffer
   useEffect(() => {
@@ -47,8 +24,9 @@ const SplashScreen = ({ onComplete }) => {
     return () => clearTimeout(timer);
   }, [phase, quote]);
 
+  // Allow skip at any phase (loading or showing)
   const triggerExit = () => {
-    if (phase === 'showing') setPhase('exiting');
+    if (phase !== 'exiting') setPhase('exiting');
   };
 
   const handleKeyDown = (e) => {
