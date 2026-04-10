@@ -7,7 +7,7 @@ const ExperienceNew = () => {
     {
       role: "Junior Engineer",
       organization: "Incede Technologies Pvt. Ltd.",
-      location: "Bengaluru, India (On-site)",
+      location: "Infopark, Kochi, Kerala",
       duration: "Mar 2026 – Present",
       description: [
         "Building and maintaining scalable backend services using Java and Spring Boot",
