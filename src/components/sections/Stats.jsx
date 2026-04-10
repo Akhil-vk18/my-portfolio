@@ -102,7 +102,7 @@ const Stats = () => {
             const Icon = stat.icon;
             return (
               <motion.div
-                key={index}
+                key={stat.label}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
@@ -131,6 +131,8 @@ const Stats = () => {
               src={streakUrl}
               alt="GitHub contribution streak"
               className="rounded-md max-w-full"
+              width="600"
+              height="150"
               loading="lazy"
               decoding="async"
             />
@@ -152,6 +154,8 @@ const Stats = () => {
                 src={statsCardUrl}
                 alt="GitHub stats card"
                 className="rounded-md max-w-full"
+                width="495"
+                height="195"
                 loading="lazy"
                 decoding="async"
               />
@@ -171,6 +175,8 @@ const Stats = () => {
                 src={topLangsUrl}
                 alt="Top programming languages"
                 className="rounded-md max-w-full"
+                width="495"
+                height="195"
                 loading="lazy"
                 decoding="async"
               />
@@ -178,7 +184,7 @@ const Stats = () => {
           </motion.div>
         </div>
 
-        {/* GitHub Activity — Space Shooter */}
+        {/* GitHub Contribution Activity Graph */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -187,7 +193,7 @@ const Stats = () => {
           className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 mb-8"
         >
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold text-white">GitHub Activity</h3>
+            <h3 className="text-lg font-semibold text-white">Contribution Activity</h3>
             <a
               href={`https://github.com/${GITHUB_USERNAME}`}
               target="_blank"
@@ -199,10 +205,11 @@ const Stats = () => {
           </div>
           <div className="overflow-x-auto flex justify-center">
             <img
-              src={`https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_USERNAME}/output/github-contribution-grid-snake.gif`}
-              alt="GitHub contribution activity as space shooter"
+              src={`https://github-readme-activity-graph.vercel.app/graph?username=${GITHUB_USERNAME}&bg_color=0d1117&color=8b5cf6&line=8b5cf6&point=c084fc&area=true&area_color=1a0a2e&hide_border=true`}
+              alt="GitHub contribution activity graph"
               className="rounded-md max-w-full"
-              style={{ imageRendering: 'pixelated' }}
+              width="900"
+              height="300"
               loading="lazy"
               decoding="async"
             />
@@ -215,7 +222,7 @@ const Stats = () => {
             const Icon = info.icon;
             return (
               <motion.div
-                key={index}
+                key={info.label}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}

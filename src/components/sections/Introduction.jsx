@@ -119,17 +119,19 @@ const Introduction = () => {
               href="https://github.com/Akhil-vk18"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="GitHub profile"
               className="p-3 glass-effect rounded-lg hover:bg-white/10 hover:scale-110 transition-all duration-300"
             >
-              <FaGithub size={24} />
+              <FaGithub size={24} aria-hidden="true" />
             </a>
             <a
               href="https://www.linkedin.com/in/akhil-santhosh-1b381228a"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="LinkedIn profile"
               className="p-3 glass-effect rounded-lg hover:bg-white/10 hover:scale-110 transition-all duration-300"
             >
-              <FaLinkedin size={24} />
+              <FaLinkedin size={24} aria-hidden="true" />
             </a>
           </motion.div>
 
@@ -141,7 +143,7 @@ const Introduction = () => {
               transition={{ delay: 1.0 }}
               className="lg:hidden mt-8 bg-accent-purple/5 border-l-4 border-accent-purple/50 rounded-r-lg px-5 py-4"
             >
-              <FaQuoteLeft className="text-accent-purple text-base mb-2 opacity-60" />
+              <FaQuoteLeft className="text-accent-purple text-base mb-2 opacity-60" aria-hidden="true" />
               <p className="text-gray-300 text-sm italic leading-relaxed mb-2">{quote.text}</p>
               <p className="text-accent-purple text-xs font-mono">— {quote.author}</p>
             </motion.div>
@@ -158,7 +160,7 @@ const Introduction = () => {
           >
             <div className="relative bg-white/5 backdrop-blur-sm border border-accent-purple/20 rounded-2xl p-8 shadow-glow">
               {/* Large decorative quote mark */}
-              <FaQuoteLeft className="text-accent-purple text-5xl opacity-20 mb-4" />
+              <FaQuoteLeft className="text-accent-purple text-5xl opacity-20 mb-4" aria-hidden="true" />
               <p className="text-gray-200 text-base italic leading-relaxed mb-6">
                 {quote.text}
               </p>
