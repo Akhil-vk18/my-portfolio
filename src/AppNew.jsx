@@ -48,13 +48,13 @@ function AppNew() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
-          className="min-h-screen bg-dark-bg text-white overflow-hidden"
+          className="h-screen bg-dark-bg text-white overflow-hidden flex"
         >
           {/* Sidebar */}
           <Sidebar activeSection={activeSection} onNavigate={handleNavigate} />
 
           {/* Main Content Area */}
-          <main className="lg:ml-72 min-h-screen overflow-y-auto">
+          <main className="lg:ml-72 flex-1 h-screen overflow-y-auto">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeSection}
