@@ -75,7 +75,8 @@ const SkillsNew = () => {
             <motion.div
               key={category.title}
               initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
               transition={{ delay: categoryIndex * 0.1 }}
             >
               <h3 className="text-xl font-semibold text-accent-purple mb-4">

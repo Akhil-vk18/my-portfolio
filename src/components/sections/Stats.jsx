@@ -63,6 +63,19 @@ const Stats = () => {
     { label: "GitHub", value: "@Akhil-vk18", icon: FaGithub },
   ];
 
+  // github-readme-stats theme params
+  const statsCardUrl =
+    `https://github-readme-stats.vercel.app/api?username=${GITHUB_USERNAME}` +
+    `&show_icons=true&theme=github_dark_dimmed&hide_border=true&count_private=true&include_all_commits=true`;
+
+  const topLangsUrl =
+    `https://github-readme-stats.vercel.app/api/top-langs/?username=${GITHUB_USERNAME}` +
+    `&layout=compact&theme=github_dark_dimmed&hide_border=true&langs_count=8`;
+
+  const streakUrl =
+    `https://streak-stats.demolab.com/?user=${GITHUB_USERNAME}` +
+    `&theme=github-dark-blue&hide_border=true`;
+
   return (
     <section id="stats" className="min-h-screen flex items-center justify-center p-8">
       <div className="max-w-6xl w-full">
@@ -83,15 +96,16 @@ const Stats = () => {
           </p>
         </motion.div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+        {/* Live stat counter cards */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
           {stats.map((stat, index) => {
             const Icon = stat.icon;
             return (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
                 transition={{ delay: index * 0.1 }}
                 className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 hover:border-white/20 transition-all duration-300"
               >
@@ -103,10 +117,72 @@ const Stats = () => {
           })}
         </div>
 
+        {/* GitHub Streak */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ delay: 0.3 }}
+          className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 mb-6"
+        >
+          <h3 className="text-lg font-semibold text-white mb-4">GitHub Streak</h3>
+          <div className="flex justify-center overflow-x-auto">
+            <img
+              src={streakUrl}
+              alt="GitHub contribution streak"
+              className="rounded-md max-w-full"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </motion.div>
+
+        {/* Stats card + Top Languages side by side */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ delay: 0.35 }}
+            className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10"
+          >
+            <h3 className="text-lg font-semibold text-white mb-4">GitHub Stats</h3>
+            <div className="flex justify-center overflow-x-auto">
+              <img
+                src={statsCardUrl}
+                alt="GitHub stats card"
+                className="rounded-md max-w-full"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ delay: 0.4 }}
+            className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10"
+          >
+            <h3 className="text-lg font-semibold text-white mb-4">Top Languages</h3>
+            <div className="flex justify-center overflow-x-auto">
+              <img
+                src={topLangsUrl}
+                alt="Top programming languages"
+                className="rounded-md max-w-full"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </motion.div>
+        </div>
+
         {/* GitHub Activity — Space Shooter */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
           transition={{ delay: 0.5 }}
           className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 mb-8"
         >
@@ -141,7 +217,8 @@ const Stats = () => {
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
                 transition={{ delay: 0.7 + index * 0.1 }}
                 className="bg-white/5 backdrop-blur-sm rounded-lg p-4 border border-white/10 flex items-center gap-3"
               >

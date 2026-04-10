@@ -57,7 +57,8 @@ const Education = () => {
               <motion.div
                 key={index}
                 initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
                 transition={{ delay: index * 0.2 }}
                 className="relative pl-8 md:pl-20"
               >

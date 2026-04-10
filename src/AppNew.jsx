@@ -35,7 +35,7 @@ function AppNew() {
       <Sidebar activeSection={activeSection} onNavigate={handleNavigate} />
 
       {/* Main Content Area */}
-      <main className="lg:ml-72 min-h-screen overflow-hidden">
+      <main className="lg:ml-72 min-h-screen overflow-y-auto">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeSection}

@@ -117,7 +117,8 @@ const ProjectsNew = () => {
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
               transition={{ delay: index * 0.08 }}
               className="relative bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 hover:border-accent-purple/40 transition-all duration-300 group flex flex-col"
               onMouseEnter={() => setHoveredIndex(index)}
