@@ -52,7 +52,8 @@ const ContactNew = () => {
         {/* Contact Form */}
         <motion.form
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
           transition={{ delay: 0.2 }}
           onSubmit={handleSubmit}
           className="space-y-6"

@@ -1,44 +1,82 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaGithub, FaMapMarkerAlt, FaBriefcase, FaStar, FaCodeBranch, FaCode } from 'react-icons/fa';
+import { FaGithub, FaMapMarkerAlt, FaBriefcase, FaStar, FaCodeBranch, FaCode, FaUsers } from 'react-icons/fa';
 import { SiSpringboot } from 'react-icons/si';
 
+// Language → hex colour mapping used in the Top Languages bar chart
+const LANG_COLORS = {
+  Java: '#B07219',
+  JavaScript: '#F7DF1E',
+  TypeScript: '#3178C6',
+  Python: '#3572A5',
+  HTML: '#E34C26',
+  CSS: '#563D7C',
+  Shell: '#89E051',
+  Go: '#00ADD8',
+  Rust: '#DEA584',
+  'C++': '#F34B7D',
+  C: '#555555',
+  Kotlin: '#A97BFF',
+  Swift: '#F05138',
+  Ruby: '#701516',
+  PHP: '#4F5D95',
+  Vue: '#41B883',
+};
+
+const getColor = (lang) => LANG_COLORS[lang] || '#8B5CF6';
+
 const Stats = () => {
-  // GitHub username configuration
   const GITHUB_USERNAME = 'Akhil-vk18';
-  
+
   const [githubStats, setGithubStats] = useState({
     publicRepos: 16,
     followers: 0,
+    following: 0,
     totalStars: 0,
-    totalForks: 2
+    totalForks: 2,
   });
+  const [topLanguages, setTopLanguages] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchGithubStats = async () => {
       try {
-        // Fetch user data and repos in parallel for faster loading
         const [userResponse, reposResponse] = await Promise.all([
           fetch(`https://api.github.com/users/${GITHUB_USERNAME}`),
-          fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100`)
+          fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100`),
         ]);
-        
+
         if (!userResponse.ok || !reposResponse.ok) {
-          throw new Error(`API request failed: User(${userResponse.status}), Repos(${reposResponse.status})`);
+          throw new Error('API request failed');
         }
-        
+
         const userData = await userResponse.json();
         const reposData = await reposResponse.json();
-        
+
         const totalStars = reposData.reduce((acc, repo) => acc + repo.stargazers_count, 0);
         const totalForks = reposData.reduce((acc, repo) => acc + repo.forks_count, 0);
-        
+
+        // Compute language distribution (by number of repos) from primary language of each repo
+        const langCounts = {};
+        reposData.forEach((repo) => {
+          if (repo.language) {
+            langCounts[repo.language] = (langCounts[repo.language] || 0) + 1;
+          }
+        });
+        const sorted = Object.entries(langCounts)
+          .sort(([, a], [, b]) => b - a)
+          .slice(0, 6);
+        const total = sorted.reduce((s, [, c]) => s + c, 0);
+        setTopLanguages(
+          sorted.map(([lang, count]) => ({ lang, count, pct: Math.round((count / total) * 100) }))
+        );
+
         setGithubStats({
           publicRepos: userData.public_repos,
           followers: userData.followers,
+          following: userData.following,
           totalStars,
-          totalForks
+          totalForks,
         });
         setLoading(false);
       } catch (error) {
@@ -51,17 +89,21 @@ const Stats = () => {
   }, []);
 
   const stats = [
-    { label: "Total Stars", value: loading ? "..." : githubStats.totalStars, icon: FaStar, color: "#F59E0B" },
-    { label: "Total Forks", value: loading ? "..." : githubStats.totalForks, icon: FaCodeBranch, color: "#8B5CF6" },
-    { label: "Public Repos", value: loading ? "..." : githubStats.publicRepos, icon: FaGithub, color: "#3B82F6" },
-    { label: "Followers", value: loading ? "..." : githubStats.followers, icon: FaCode, color: "#06B6D4" },
+    { label: 'Total Stars', value: loading ? '...' : githubStats.totalStars, icon: FaStar, color: '#F59E0B' },
+    { label: 'Total Forks', value: loading ? '...' : githubStats.totalForks, icon: FaCodeBranch, color: '#8B5CF6' },
+    { label: 'Public Repos', value: loading ? '...' : githubStats.publicRepos, icon: FaGithub, color: '#3B82F6' },
+    { label: 'Followers', value: loading ? '...' : githubStats.followers, icon: FaUsers, color: '#06B6D4' },
   ];
 
   const profileInfo = [
-    { label: "Location", value: "Kerala, India", icon: FaMapMarkerAlt },
-    { label: "Status", value: "Hireable ✓", icon: FaBriefcase },
-    { label: "GitHub", value: "@Akhil-vk18", icon: FaGithub },
+    { label: 'Location', value: 'Kerala, India', icon: FaMapMarkerAlt },
+    { label: 'Status', value: 'Hireable ✓', icon: FaBriefcase },
+    { label: 'GitHub', value: '@Akhil-vk18', icon: FaGithub },
   ];
+
+  const streakUrl =
+    `https://streak-stats.demolab.com/?user=${GITHUB_USERNAME}` +
+    `&theme=github-dark-blue&hide_border=true`;
 
   return (
     <section id="stats" className="min-h-screen flex items-center justify-center p-8">
@@ -83,15 +125,16 @@ const Stats = () => {
           </p>
         </motion.div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+        {/* Live stat counter cards */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
           {stats.map((stat, index) => {
             const Icon = stat.icon;
             return (
               <motion.div
-                key={index}
+                key={stat.label}
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
                 transition={{ delay: index * 0.1 }}
                 className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 hover:border-white/20 transition-all duration-300"
               >
@@ -103,15 +146,77 @@ const Stats = () => {
           })}
         </div>
 
-        {/* GitHub Activity — Space Shooter */}
+        {/* GitHub Streak */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ delay: 0.3 }}
+          className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 mb-6"
+        >
+          <h3 className="text-lg font-semibold text-white mb-4">GitHub Streak</h3>
+          <div className="flex justify-center overflow-x-auto">
+            <img
+              src={streakUrl}
+              alt="GitHub contribution streak"
+              className="rounded-md max-w-full"
+              width="600"
+              height="150"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </motion.div>
+
+        {/* Top Languages (computed from GitHub API) */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ delay: 0.35 }}
+          className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 mb-6"
+        >
+          <h3 className="text-lg font-semibold text-white mb-1">Top Languages</h3>
+          <p className="text-xs text-gray-500 font-mono mb-5">by number of repositories</p>
+          {loading ? (
+            <div className="flex items-center gap-3 text-gray-400 font-mono text-sm">
+              <FaCode className="animate-pulse text-accent-purple" />
+              Loading language data…
+            </div>
+          ) : topLanguages.length > 0 ? (
+            <div className="space-y-3">
+              {topLanguages.map(({ lang, pct }) => (
+                <div key={lang} className="flex items-center gap-3">
+                  <span className="text-sm text-gray-300 w-24 shrink-0">{lang}</span>
+                  <div className="flex-1 bg-white/10 rounded-full h-2.5 overflow-hidden">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      whileInView={{ width: `${pct}%` }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.8, ease: 'easeOut' }}
+                      className="h-full rounded-full"
+                      style={{ backgroundColor: getColor(lang) }}
+                    />
+                  </div>
+                  <span className="text-xs text-gray-400 w-10 text-right shrink-0">{pct}%</span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-400 text-sm font-mono">No language data available.</p>
+          )}
+        </motion.div>
+
+        {/* GitHub Contribution Activity Graph */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
           transition={{ delay: 0.5 }}
           className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 mb-8"
         >
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold text-white">GitHub Activity</h3>
+            <h3 className="text-lg font-semibold text-white">Contribution Activity</h3>
             <a
               href={`https://github.com/${GITHUB_USERNAME}`}
               target="_blank"
@@ -123,10 +228,11 @@ const Stats = () => {
           </div>
           <div className="overflow-x-auto flex justify-center">
             <img
-              src={`https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_USERNAME}/output/github-contribution-grid-snake.gif`}
-              alt="GitHub contribution activity as space shooter"
+              src={`https://github-readme-activity-graph.vercel.app/graph?username=${GITHUB_USERNAME}&bg_color=0d1117&color=8b5cf6&line=8b5cf6&point=c084fc&area=true&area_color=1a0a2e&hide_border=true`}
+              alt="GitHub contribution activity graph"
               className="rounded-md max-w-full"
-              style={{ imageRendering: 'pixelated' }}
+              width="900"
+              height="300"
               loading="lazy"
               decoding="async"
             />
@@ -139,9 +245,10 @@ const Stats = () => {
             const Icon = info.icon;
             return (
               <motion.div
-                key={index}
+                key={info.label}
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
                 transition={{ delay: 0.7 + index * 0.1 }}
                 className="bg-white/5 backdrop-blur-sm rounded-lg p-4 border border-white/10 flex items-center gap-3"
               >
@@ -160,4 +267,3 @@ const Stats = () => {
 };
 
 export default Stats;
-
