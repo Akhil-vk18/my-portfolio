@@ -5,6 +5,20 @@ import { FaBriefcase, FaCalendar, FaMapMarkerAlt } from 'react-icons/fa';
 const ExperienceNew = () => {
   const experiences = [
     {
+      role: "Junior Engineer",
+      organization: "Incede Technologies Pvt. Ltd.",
+      location: "Remote / India",
+      duration: "Mar 2026 – Present",
+      description: [
+        "Building and maintaining scalable backend services using Java and Spring Boot",
+        "Designing and exposing RESTful APIs consumed by frontend and third-party clients",
+        "Collaborating with cross-functional teams in an AI-first product environment",
+        "Participating in code reviews, sprint planning, and continuous integration workflows",
+        "Contributing to microservices architecture and performance optimisation initiatives"
+      ],
+      current: true
+    },
+    {
       role: "Developer Intern",
       organization: "Expectation Walkers GenAI Research and Services Pvt. Ltd.",
       location: "Irinjalakuda",
@@ -15,7 +29,7 @@ const ExperienceNew = () => {
         "Assisted in debugging, testing, and feature enhancement",
         "Collaborated with developers following structured workflows and documentation practices"
       ],
-      current: true
+      current: false
     }
   ];
 
@@ -42,13 +56,13 @@ const ExperienceNew = () => {
           <div className="absolute left-0 md:left-8 top-0 bottom-0 w-px bg-gradient-to-b from-accent-purple to-accent-blue"></div>
 
           <div className="space-y-8">
-            {experiences.map((exp, index) => (
+            {experiences.map((exp, idx) => (
               <motion.div
-                key={index}
+                key={exp.organization}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
-                transition={{ delay: index * 0.2 }}
+                transition={{ delay: idx * 0.2 }}
                 className="relative pl-8 md:pl-20"
               >
                 {/* Dot Indicator */}
